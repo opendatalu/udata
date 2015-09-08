@@ -8,12 +8,12 @@ import u from 'utils';
 export default {
     name: 'base-field',
     replace: true,
-    inherit: true,
     data: function() {
         return {
             errors: []
         };
     },
+    props: ['field', 'schema', 'model'],
     components: {
         'text-input': require('components/form/text-input.vue'),
         'hidden-input': require('components/form/hidden-input.vue'),

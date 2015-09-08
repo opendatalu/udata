@@ -38,7 +38,6 @@ const ISO_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
 export default {
     name: 'date-picker',
-    inherit: true,
     replace: true,
     props: ['serializable', 'field', 'value'],
     components: {
@@ -60,6 +59,8 @@ export default {
     },
     events: {
         'calendar:date:selected': function(date) {
+            console.log('this', this);
+            console.log('this.field', this.field);
             this.$$.input.value = date.format(this.field.format || DEFAULT_FORMAT);
             this.$$.hidden.value = date.format(ISO_FORMAT);
             this.picking = false;

@@ -19,7 +19,8 @@ describe("Common Fields features", function() {
         this.vm = new Vue({
             el: fixture.set(`
                 <form role="form" v-el="form">
-                    <field v-repeat="field:fields" v-ref="field"></field>
+                    <field v-repeat="field:fields" v-ref="field"
+                        schema="{{schema}}" model="{{model}}"></field>
                 </form>`),
             mixins: [require('components/form/base-form')],
             components: {

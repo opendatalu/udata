@@ -52,8 +52,8 @@ const DEFAULT_FORMAT = 'L',
 
 export default {
     name: 'daterange-picker',
-    inherit: true,
     replace: true,
+    props: ['field', 'schema', 'model', 'value'],
     components: {
         calendar: require('components/calendar.vue')
     },

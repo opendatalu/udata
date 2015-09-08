@@ -6,7 +6,9 @@
 
 <template>
     <form role="form">
-        <form-field v-repeat="field:fields"></form-field>
+        <form-field v-repeat="field:fields"
+            schema="{{schema}}" model="{{model}}">
+        </form-field>
     </form>
 </template>
 

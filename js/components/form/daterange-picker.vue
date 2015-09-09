@@ -53,7 +53,7 @@ const DEFAULT_FORMAT = 'L',
 export default {
     name: 'daterange-picker',
     replace: true,
-    props: ['field', 'schema', 'model', 'value'],
+    mixins: [require('components/form/base-field').FieldComponentMixin],
     components: {
         calendar: require('components/calendar.vue')
     },

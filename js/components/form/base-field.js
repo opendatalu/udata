@@ -1,11 +1,31 @@
 import log from 'logger';
 import $ from 'jquery';
 import u from 'utils';
+import Vue from 'vue';
+
+/**
+ * Base inheritable properties reusable by nested components
+ */
+export const FieldComponentMixin = {
+    props: {
+        field: {
+            type: Object,
+            default: function(){ return {};},
+            required: true
+        },
+        model: Object,
+        value: null,  // Means any type
+        description: null,
+        property: Object,
+        required: Boolean,
+        placeholder: String
+    }
+};
 
 /**
  * Common form fields behaviors
  */
-export default {
+export const BaseField = {
     name: 'base-field',
     replace: true,
     data: function() {
@@ -13,26 +33,24 @@ export default {
             errors: []
         };
     },
-    props: ['field', 'schema', 'model'],
-    components: {
-        'text-input': require('components/form/text-input.vue'),
-        'hidden-input': require('components/form/hidden-input.vue'),
-        'select-input': require('components/form/select-input.vue'),
-        'markdown-editor': require('components/form/markdown.vue'),
-        'tag-completer': require('components/form/tag-completer'),
-        'dataset-completer': require('components/form/dataset-completer'),
-        'reuse-completer': require('components/form/reuse-completer'),
-        'territory-completer': require('components/form/territory-completer'),
-        'zone-completer': require('components/form/zone-completer.vue'),
-        'format-completer': require('components/form/format-completer'),
-        'datetime-picker': require('components/form/datetime-picker.vue'),
-        'time-picker': require('components/form/time-picker.vue'),
-        'date-picker': require('components/form/date-picker.vue'),
-        'daterange-picker': require('components/form/daterange-picker.vue'),
-        'frequency-field': require('components/form/frequency-field.vue'),
-        'checksum': require('components/form/checksum.vue'),
-        'checkbox': require('components/form/checkbox.vue')
+    props: {
+        field: {
+            type: Object,
+            default: function(){ return {};},
+            required: true
+        },
+        model: {
+            type: Object,
+            default: function(){ return {};},
+            required: true
+        },
+        schema: {
+            type: Object,
+            default: function(){ return {};},
+            required: true
+        }
     },
+    // ['field', 'schema', 'model'],
     computed: {
         description: function() {
             let property = this.property;
@@ -74,21 +92,27 @@ export default {
             return this.field.placeholder || this.field.label || '';
         },
         widget: function() {
+            let widget;
             if (this.field.widget) {
-                return this.field.widget;
+                widget = this.field.widget;
+            } else if (this.property.type == 'boolean') {
+                widget = 'checkbox';
+            } else if (this.property.type == 'string') {
+                if (this.property.format === 'markdown') {
+                    widget = 'markdown-editor';
+                } else if (this.property.enum) {
+                    widget = 'select-input';
+                }
             }
-            switch(this.property.type) {
-                case 'boolean':
-                    return 'checkbox';
-                case 'string':
-                    if (this.property.format === 'markdown') {
-                        return 'markdown-editor';
-                    } else if (this.property.enum) {
-                        return 'select-input';
-                    }
-                default:
-                    return 'text-input';
+            widget = widget || 'text-input';
+
+            // Lazy load component if needed
+            if (!this.$options.components.hasOwnProperty(widget)) {
+                this.$options.components[widget] = function(resolve, reject) {
+                    require(['./' + widget + '.vue'], resolve);
+                };
             }
+            return widget;
         }
     },
     ready: function() {
@@ -101,3 +125,5 @@ export default {
         });
     }
 };
+
+export default BaseField;

@@ -6,9 +6,9 @@
 
 <template>
     <form role="form">
-        <form-field v-repeat="field:fields"
+        <field v-repeat="field in fields" field="{{field}}"
             schema="{{schema}}" model="{{model}}">
-        </form-field>
+        </field>
     </form>
 </template>
 
@@ -21,7 +21,7 @@ module.exports = {
     name: 'form-vertical',
     mixins: [BaseForm],
     components: {
-        'form-field': require('components/form/vertical-field.vue')
+        field: require('components/form/vertical-field.vue')
     }
 };
 </script>

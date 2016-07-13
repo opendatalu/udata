@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  udata\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-07-12 15:45+0200\n"
+"POT-Creation-Date: 2016-07-13 13:33+0200\n"
 "PO-Revision-Date: 2016-03-23 10:32+0000\n"
 "Last-Translator: Larlet David <david@larlet.fr>\n"
 "Language: fr\n"
@@ -176,6 +176,225 @@ msgstr "a mis à jour un jeu de données"
 #: udata/core/dataset/activities.py:38
 msgid "deleted a dataset"
 msgstr "a supprimé un jeu de données"
+
+#: udata/core/dataset/api_fields.py:19
+msgid "The hashing algorithm used to compute the checksum"
+msgstr ""
+
+#: udata/core/dataset/api_fields.py:21
+msgid "The resulting checksum/hash"
+msgstr ""
+
+#: udata/core/dataset/api_fields.py:26
+msgid "The license identifier"
+msgstr "L'identifiant de la license"
+
+#: udata/core/dataset/api_fields.py:27 udata/core/dataset/api_fields.py:40
+msgid "The resource title"
+msgstr "Le titre de la resource"
+
+#: udata/core/dataset/api_fields.py:28
+msgid "The license official maintainer"
+msgstr ""
+
+#: udata/core/dataset/api_fields.py:29
+msgid "The license official URL"
+msgstr "L'url officielle de la license"
+
+#: udata/core/dataset/api_fields.py:30
+msgid "Some arbitry flags"
+msgstr ""
+
+#: udata/core/dataset/api_fields.py:34
+msgid "The frequency identifier"
+msgstr ""
+
+#: udata/core/dataset/api_fields.py:35
+msgid "The frequency display name"
+msgstr ""
+
+#: udata/core/dataset/api_fields.py:39
+msgid "The resource unique ID"
+msgstr "L'identifiant unique de la resource"
+
+#: udata/core/dataset/api_fields.py:42
+msgid "The resource markdown description"
+msgstr "La description de la resource en markdown"
+
+#: udata/core/dataset/api_fields.py:47
+msgid "The resource format"
+msgstr "Le format de la resource"
+
+#: udata/core/dataset/api_fields.py:48
+msgid "The resource URL"
+msgstr "L'url de la resource"
+
+#: udata/core/dataset/api_fields.py:51
+msgid "A checksum to validate file validity"
+msgstr "La checksum de validation du fichier"
+
+#: udata/core/dataset/api_fields.py:52
+msgid "The resource file size in bytes"
+msgstr "La taille du fichier en octets"
+
+#: udata/core/dataset/api_fields.py:53
+msgid "The resource mime type"
+msgstr "Le type mime de la resource"
+
+#: udata/core/dataset/api_fields.py:55
+msgid "The resource creation date"
+msgstr "Date de création de la ressource"
+
+#: udata/core/dataset/api_fields.py:57
+msgid "The resource publication date"
+msgstr "Date de publication de la resource"
+
+#: udata/core/dataset/api_fields.py:60
+msgid "The resource last modification date"
+msgstr "Date de dernière modification de la resource"
+
+#: udata/core/dataset/api_fields.py:61
+msgid "The resource metrics"
+msgstr "Mesures de la resource"
+
+#: udata/core/dataset/api_fields.py:63
+msgid "The resource availability"
+msgstr "La disponibilité de la resource"
+
+#: udata/core/dataset/api_fields.py:68
+msgid "Whether the upload succeeded or not."
+msgstr "Si le téléchargement a réussi ou pas."
+
+#: udata/core/dataset/api_fields.py:72
+msgid "Resource ID"
+msgstr "Identifiant de la resource"
+
+#: udata/core/dataset/api_fields.py:75
+msgid "The temporal coverage start date"
+msgstr "Date de début de la couverture temporelle"
+
+#: udata/core/dataset/api_fields.py:77
+msgid "The temporal coverage end date"
+msgstr "Date de fin de la couverture temporelle"
+
+#: udata/core/dataset/api_fields.py:82 udata/core/dataset/api_fields.py:108
+#: udata/core/dataset/api_fields.py:174
+msgid "The dataset title"
+msgstr "Titre du jeu de données"
+
+#: udata/core/dataset/api_fields.py:85
+msgid "The API URI for this dataset"
+msgstr "L'URI de l'API pour ce jeu de données"
+
+#: udata/core/dataset/api_fields.py:88 udata/core/dataset/api_fields.py:181
+msgid "The web page URL for this dataset"
+msgstr "L'url de la page web de ce jeu de données"
+
+#: udata/core/dataset/api_fields.py:94
+msgid "Reference to the associated dataset"
+msgstr "Référence sur le jeu de données associé"
+
+#: udata/core/dataset/api_fields.py:97 udata/core/dataset/api_fields.py:141
+msgid "The producer organization"
+msgstr "L'organisation du producteur"
+
+#: udata/core/dataset/api_fields.py:100 udata/core/dataset/api_fields.py:143
+msgid "The user information"
+msgstr "Informations sur l'utilisateur"
+
+#: udata/core/dataset/api_fields.py:107 udata/core/dataset/api_fields.py:173
+msgid "The dataset identifier"
+msgstr "L'identifiant du jeu de données"
+
+#: udata/core/dataset/api_fields.py:110 udata/core/dataset/api_fields.py:176
+msgid "The dataset permalink string"
+msgstr ""
+
+#: udata/core/dataset/api_fields.py:112
+msgid "The dataset description in markdown"
+msgstr "La description du jeu de donnees en markdown"
+
+#: udata/core/dataset/api_fields.py:114
+msgid "The dataset creation date"
+msgstr "Date de création du jeu de données"
+
+#: udata/core/dataset/api_fields.py:116
+msgid "The dataset last modification date"
+msgstr "Date de dernière modification du jeu de données"
+
+#: udata/core/dataset/api_fields.py:117
+msgid "The deletion date if deleted"
+msgstr "Date d'effacement"
+
+#: udata/core/dataset/api_fields.py:118
+msgid "Is the dataset featured"
+msgstr "Est-ce que le jeu de données est mis en avant"
+
+#: udata/core/dataset/api_fields.py:120
+msgid "Is the dataset private to the owner or the organization"
+msgstr "Est-ce que le jeu de données est privé au propriétaire ou à l'organisation"
+
+#: udata/core/dataset/api_fields.py:123
+msgid "The dataset badges"
+msgstr ""
+
+#: udata/core/dataset/api_fields.py:126
+msgid "The dataset resources"
+msgstr "Les resources du jeu de données"
+
+#: udata/core/dataset/api_fields.py:130
+msgid "The dataset community submitted resources"
+msgstr "Les resources proposés par la communauté du jeu de données"
+
+#: udata/core/dataset/api_fields.py:132
+msgid "The update frequency"
+msgstr "Fréquence de mise à jour"
+
+#: udata/core/dataset/api_fields.py:137
+msgid "Extras attributes as key-value pairs"
+msgstr "Paramètres supplémentaires comme paires clés-valeur"
+
+#: udata/core/dataset/api_fields.py:138
+msgid "The dataset metrics"
+msgstr ""
+
+#: udata/core/dataset/api_fields.py:146
+msgid "The temporal coverage"
+msgstr "Couverture temporelle"
+
+#: udata/core/dataset/api_fields.py:149
+msgid "The spatial coverage"
+msgstr "Couverture spatiale"
+
+#: udata/core/dataset/api_fields.py:152
+msgid "The dataset license"
+msgstr "La license du jeu de données"
+
+#: udata/core/dataset/api_fields.py:155
+msgid "The dataset API URI"
+msgstr "L'URI de l'API du jeu de données"
+
+#: udata/core/dataset/api_fields.py:158
+msgid "The dataset page URL"
+msgstr "L'URL de la page du jeu de données"
+
+#: udata/core/dataset/api_fields.py:164
+msgid "The dataset quality"
+msgstr "La qualité du jeu de données"
+
+#: udata/core/dataset/api_fields.py:166
+msgid "The resources last modification date"
+msgstr "Date de dernière modification de la resource"
+
+#: udata/core/dataset/api_fields.py:178
+msgid "The dataset (organization) logo URL"
+msgstr "L'URL du logo (d'organisation) du jeu de données"
+
+#: udata/core/dataset/api_fields.py:183
+#: udata/core/organization/api_fields.py:100 udata/core/reuse/api_fields.py:72
+#: udata/core/user/api_fields.py:92
+msgid "The internal match score"
+msgstr ""
 
 #: udata/core/dataset/forms.py:26 udata/core/dataset/forms.py:67
 #: udata/core/discussions/forms.py:11 udata/core/issues/forms.py:11
@@ -548,6 +767,107 @@ msgstr "a mis à jour une organisation"
 msgid "updated an organization"
 msgstr "a mis à jour une organisation"
 
+#: udata/core/organization/api_fields.py:13
+#: udata/core/organization/api_fields.py:53
+#: udata/core/organization/api_fields.py:89
+msgid "The organization name"
+msgstr "Nom de l'organisation"
+
+#: udata/core/organization/api_fields.py:14
+#: udata/core/organization/api_fields.py:54
+#: udata/core/organization/api_fields.py:91
+msgid "The organization acronym"
+msgstr "L'acronyme de l'organisation"
+
+#: udata/core/organization/api_fields.py:17
+#: udata/core/organization/api_fields.py:72
+msgid "The organization API URI"
+msgstr "L'URL de l'API de l'organisation"
+
+#: udata/core/organization/api_fields.py:19
+#: udata/core/organization/api_fields.py:57
+msgid "The organization string used as permalink"
+msgstr ""
+
+#: udata/core/organization/api_fields.py:23
+#: udata/core/organization/api_fields.py:98
+msgid "The organization web page URL"
+msgstr "L'URL de la page de l'organisation"
+
+#: udata/core/organization/api_fields.py:25
+#: udata/core/organization/api_fields.py:95
+msgid "The organization logo URL"
+msgstr "L'URL du logo de l'organisation"
+
+#: udata/core/organization/api_fields.py:35
+msgid "The request creation date"
+msgstr "Date de création de la requête"
+
+#: udata/core/organization/api_fields.py:37
+msgid "The current request status"
+msgstr "Statut actuel de la requête"
+
+#: udata/core/organization/api_fields.py:40
+msgid "A request comment from the user"
+msgstr "Commentaire de requête d'un utilisateur"
+
+#: udata/core/organization/api_fields.py:46
+msgid "The member role in the organization"
+msgstr "Rôle du membre dans cette organisation"
+
+#: udata/core/organization/api_fields.py:52
+#: udata/core/organization/api_fields.py:88 udata/core/reuse/api_fields.py:42
+msgid "The organization identifier"
+msgstr "Identifiant de l'organisation"
+
+#: udata/core/organization/api_fields.py:55 udata/core/organization/forms.py:30
+msgid "The organization website URL"
+msgstr "L'URL du site web de votre organisation"
+
+#: udata/core/organization/api_fields.py:60
+msgid "The organization description in Markdown"
+msgstr "La description de l'organisation en markdown"
+
+#: udata/core/organization/api_fields.py:62
+msgid "The organization creation date"
+msgstr "Date de création de l'organisation"
+
+#: udata/core/organization/api_fields.py:64
+msgid "The organization last modification date"
+msgstr "Date de dernière modification de l'organisation"
+
+#: udata/core/organization/api_fields.py:66
+msgid "The organization deletion date if deleted"
+msgstr ""
+
+#: udata/core/organization/api_fields.py:69
+msgid "The organization metrics"
+msgstr ""
+
+#: udata/core/organization/api_fields.py:75
+msgid "The organization page URL"
+msgstr "L'URL de la page de l'organisation"
+
+#: udata/core/organization/api_fields.py:76
+msgid "The organization logo URLs"
+msgstr ""
+
+#: udata/core/organization/api_fields.py:78
+msgid "The organization members"
+msgstr "Les membres de l'organisation"
+
+#: udata/core/organization/api_fields.py:80
+msgid "The organization badges"
+msgstr ""
+
+#: udata/core/organization/api_fields.py:93
+msgid "The organization permalink string"
+msgstr "Le permalien de l'organisation"
+
+#: udata/core/organization/api_fields.py:105
+msgid "The refusal comment."
+msgstr "Le commentaire de refus."
+
 #: udata/core/organization/forms.py:25
 msgid "Acronym"
 msgstr "Sigle"
@@ -563,10 +883,6 @@ msgstr "Les détails sur votre oganisation"
 #: udata/core/organization/forms.py:30 udata/core/user/forms.py:20
 msgid "Website"
 msgstr "Site web"
-
-#: udata/core/organization/forms.py:30
-msgid "The organization website URL"
-msgstr "L'URL du site web de votre organisation"
 
 #: udata/core/organization/forms.py:31
 msgid "Logo"
@@ -680,6 +996,118 @@ msgstr "a mis à jour une réutilisation"
 #: udata/core/reuse/activities.py:39
 msgid "deleted a reuse"
 msgstr "a supprimé une réutilisation"
+
+#: udata/core/reuse/api_fields.py:17 udata/core/reuse/api_fields.py:63
+msgid "The reuse identifier"
+msgstr "L'identifiant de la réutilisation"
+
+#: udata/core/reuse/api_fields.py:18 udata/core/reuse/api_fields.py:64
+#: udata/core/reuse/api_fields.py:77
+msgid "The reuse title"
+msgstr "Titre de la réutilisation"
+
+#: udata/core/reuse/api_fields.py:20 udata/core/reuse/api_fields.py:66
+msgid "The reuse permalink string"
+msgstr "Le permalien de la réutilisation"
+
+#: udata/core/reuse/api_fields.py:22
+msgid "The reuse type"
+msgstr "Le type de réutilisation"
+
+#: udata/core/reuse/api_fields.py:24
+msgid "The reuse remote URL (website)"
+msgstr "L'URL externe de la réutilisation"
+
+#: udata/core/reuse/api_fields.py:26
+msgid "The reuse description in Markdown"
+msgstr "La description de la réutilisation en markdown"
+
+#: udata/core/reuse/api_fields.py:28
+msgid "Some keywords to help in search"
+msgstr "Quelques mots clés pour aider la recherche"
+
+#: udata/core/reuse/api_fields.py:30
+msgid "The reuse badges"
+msgstr ""
+
+#: udata/core/reuse/api_fields.py:33
+msgid "Is the reuse featured"
+msgstr "Est la réutilisation mise en avant"
+
+#: udata/core/reuse/api_fields.py:35
+msgid "Is the reuse private to the owner or the organization"
+msgstr ""
+"Restreint la visibilité de la réutilisation à vous ou votre organisation "
+"seulement."
+
+#: udata/core/reuse/api_fields.py:36 udata/core/reuse/api_fields.py:78
+#, fuzzy
+#| msgid "Subject thumbnail"
+msgid "The reuse thumbnail"
+msgstr "Vignette du sujet"
+
+#: udata/core/reuse/api_fields.py:38
+#, fuzzy
+#| msgid "The resource creation date"
+msgid "The reuse creation date"
+msgstr "Dernière mise à jour de ressource"
+
+#: udata/core/reuse/api_fields.py:40
+#, fuzzy
+#| msgid "The resource last modification date"
+msgid "The reuse last modification date"
+msgstr "Date de dernière modification"
+
+#: udata/core/reuse/api_fields.py:44
+#, fuzzy
+#| msgid "Used datasets"
+msgid "The reused datasets"
+msgstr "Jeux de données utilisés"
+
+#: udata/core/reuse/api_fields.py:47
+#, fuzzy
+#| msgid "The producer organization"
+msgid "The publishing organization"
+msgstr "Nom court de l'organisation"
+
+#: udata/core/reuse/api_fields.py:49
+msgid "The owner user"
+msgstr ""
+
+#: udata/core/reuse/api_fields.py:51
+#, fuzzy
+#| msgid "The resource metrics"
+msgid "The reuse metrics"
+msgstr "Suppression de la ressource"
+
+#: udata/core/reuse/api_fields.py:54 udata/core/reuse/api_fields.py:81
+#, fuzzy
+#| msgid "See the reuse"
+msgid "The reuse API URI"
+msgstr "Voir la réutilisation"
+
+#: udata/core/reuse/api_fields.py:57 udata/core/reuse/api_fields.py:70
+#: udata/core/reuse/api_fields.py:84
+msgid "The reuse page URL"
+msgstr ""
+
+#: udata/core/reuse/api_fields.py:67
+#, fuzzy
+#| msgid "Subject thumbnail"
+msgid "The reuse thumbnail URL"
+msgstr "Vignette du sujet"
+
+#: udata/core/reuse/api_fields.py:88
+#, fuzzy
+#| msgid "The frequency identifier"
+msgid "The reuse type identifier"
+msgstr "Date de mise à jour prévue"
+
+#: udata/core/reuse/api_fields.py:89
+#, fuzzy
+#| msgid "The frequency display name"
+msgid "The reuse type display name"
+msgstr "Date de mise à jour prévue"
 
 #: udata/core/reuse/forms.py:16
 msgid "This URL is already registered"
@@ -914,6 +1342,126 @@ msgstr "a suivi un jeu de données"
 #: udata/core/user/activities.py:63
 msgid "followed a reuse"
 msgstr "a suivi une réutilisation"
+
+#: udata/core/user/api_fields.py:11 udata/core/user/api_fields.py:34
+#: udata/core/user/api_fields.py:84
+#, fuzzy
+#| msgid "First name"
+msgid "The user first name"
+msgstr "Prénom"
+
+#: udata/core/user/api_fields.py:13
+msgid "The user larst name"
+msgstr ""
+
+#: udata/core/user/api_fields.py:15 udata/core/user/api_fields.py:32
+#: udata/core/user/api_fields.py:90
+#, fuzzy
+#| msgid "The user information"
+msgid "The user permalink string"
+msgstr "Informations"
+
+#: udata/core/user/api_fields.py:18 udata/core/user/api_fields.py:49
+msgid "The user profile page URL"
+msgstr ""
+
+#: udata/core/user/api_fields.py:21 udata/core/user/api_fields.py:52
+#, fuzzy
+#| msgid "The user information"
+msgid "The user API URI"
+msgstr "Informations"
+
+#: udata/core/user/api_fields.py:22 udata/core/user/api_fields.py:37
+#: udata/core/user/api_fields.py:88
+msgid "The user avatar URL"
+msgstr ""
+
+#: udata/core/user/api_fields.py:30 udata/core/user/api_fields.py:62
+#: udata/core/user/api_fields.py:83
+#, fuzzy
+#| msgid "The license identifier"
+msgid "The user identifier"
+msgstr "L'identifiant de l'erreur est {id}"
+
+#: udata/core/user/api_fields.py:36 udata/core/user/api_fields.py:86
+msgid "The user last name"
+msgstr ""
+
+#: udata/core/user/api_fields.py:38
+msgid "The user website"
+msgstr ""
+
+#: udata/core/user/api_fields.py:39
+msgid "The user self description"
+msgstr ""
+
+#: udata/core/user/api_fields.py:40
+msgid "Site wide user roles"
+msgstr ""
+
+#: udata/core/user/api_fields.py:43
+#, fuzzy
+#| msgid "Maximum organization reuses"
+msgid "The organization the user belongs to"
+msgstr "Maximum de réutilisations pour une organisation"
+
+#: udata/core/user/api_fields.py:46
+#, fuzzy
+#| msgid "The resource creation date"
+msgid "The registeration date"
+msgstr "Dernière mise à jour de ressource"
+
+#: udata/core/user/api_fields.py:56
+#, fuzzy
+#| msgid "The user information"
+msgid "The user email"
+msgstr "Informations"
+
+#: udata/core/user/api_fields.py:57 udata/core/user/api_fields.py:77
+msgid "The user API Key"
+msgstr ""
+
+#: udata/core/user/api_fields.py:64
+msgid "The user's resources availability percentage"
+msgstr ""
+
+#: udata/core/user/api_fields.py:67
+#, fuzzy
+#| msgid "Number of datasets used"
+msgid "The user's orgs datasets number"
+msgstr "Nombre de jeux de données utilisés"
+
+#: udata/core/user/api_fields.py:69
+msgid "The user's orgs followers number"
+msgstr ""
+
+#: udata/core/user/api_fields.py:71
+#, fuzzy
+#| msgid "The dataset metrics"
+msgid "The user's datasets number"
+msgstr "Derniers jeux de données"
+
+#: udata/core/user/api_fields.py:73
+#, fuzzy, python-format
+#| msgid "%(user)s followed you"
+msgid "The user's followers number"
+msgstr "%(user)s vous a suivi"
+
+#: udata/core/user/api_fields.py:97
+#, fuzzy
+#| msgid "Last modification date"
+msgid "The notification type"
+msgstr "Date de dernière modification"
+
+#: udata/core/user/api_fields.py:99
+#, fuzzy
+#| msgid "The dataset creation date"
+msgid "The notification creation datetime"
+msgstr "Date de dernière modification"
+
+#: udata/core/user/api_fields.py:101
+msgid "Key-Value details depending on notification type"
+msgstr ""
 
 #: udata/core/user/forms.py:17
 msgid "First name"

@@ -7,6 +7,8 @@ from udata.core.organization.api_fields import org_ref_fields
 from udata.core.spatial.api_fields import spatial_coverage_fields
 from udata.core.user.api_fields import user_ref_fields
 
+from udata.i18n import lazy_gettext as _
+
 from .models import (
     UPDATE_FREQUENCIES, RESOURCE_TYPES, DEFAULT_FREQUENCY,
     CHECKSUM_TYPES, DEFAULT_CHECKSUM_TYPE, DEFAULT_LICENSE
@@ -14,169 +16,169 @@ from .models import (
 
 checksum_fields = api.model('Checksum', {
     'type': fields.String(
-        description='The hashing algorithm used to compute the checksum',
+        description=_('The hashing algorithm used to compute the checksum'),
         default=DEFAULT_CHECKSUM_TYPE, enum=CHECKSUM_TYPES),
-    'value': fields.String(description="The resulting checksum/hash",
+    'value': fields.String(description=_("The resulting checksum/hash"),
                            required=True)
 })
 
 license_fields = api.model('License', {
-    'id': fields.String(description='The license identifier', required=True),
-    'title': fields.String(description='The resource title', required=True),
-    'maintainer': fields.String(description='The license official maintainer'),
-    'url': fields.String(description='The license official URL'),
-    'flags': fields.List(fields.String, description='Some arbitry flags'),
+    'id': fields.String(description=_('The license identifier'), required=True),
+    'title': fields.String(description=_('The resource title'), required=True),
+    'maintainer': fields.String(description=_('The license official maintainer')),
+    'url': fields.String(description=_('The license official URL')),
+    'flags': fields.List(fields.String, description=_('Some arbitry flags')),
 })
 
 frequency_fields = api.model('Frequency', {
-    'id': fields.String(description='The frequency identifier'),
-    'label': fields.String(description='The frequency display name')
+    'id': fields.String(description=_('The frequency identifier')),
+    'label': fields.String(description=_('The frequency display name'))
 })
 
 resource_fields = api.model('Resource', {
-    'id': fields.String(description='The resource unique ID', readonly=True),
-    'title': fields.String(description='The resource title', required=True),
+    'id': fields.String(description=_('The resource unique ID'), readonly=True),
+    'title': fields.String(description=_('The resource title'), required=True),
     'description': fields.Markdown(
-        description='The resource markdown description'),
+        description=_('The resource markdown description')),
     'filetype': fields.String(
-        description=('Whether the resource is an uploaded file, '
-                     'a remote file or an API'),
+        description=_(('Whether the resource is an uploaded file, '
+                     'a remote file or an API')),
         required=True, enum=RESOURCE_TYPES.keys()),
-    'format': fields.String(description='The resource format', required=True),
-    'url': fields.String(description='The resource URL', required=True),
+    'format': fields.String(description=_('The resource format'), required=True),
+    'url': fields.String(description=_('The resource URL'), required=True),
     'checksum': fields.Nested(
         checksum_fields, allow_null=True,
-        description='A checksum to validate file validity'),
-    'filesize': fields.Integer(description='The resource file size in bytes'),
-    'mime': fields.String(description='The resource mime type'),
+        description=_('A checksum to validate file validity')),
+    'filesize': fields.Integer(description=_('The resource file size in bytes')),
+    'mime': fields.String(description=_('The resource mime type')),
     'created_at': fields.ISODateTime(
-        readonly=True, description='The resource creation date'),
+        readonly=True, description=_('The resource creation date')),
     'published': fields.ISODateTime(
-        description='The resource publication date'),
+        description=_('The resource publication date')),
     'last_modified': fields.ISODateTime(
         attribute='modified', readonly=True,
-        description='The resource last modification date'),
-    'metrics': fields.Raw(description='The resource metrics', readonly=True),
+        description=_('The resource last modification date')),
+    'metrics': fields.Raw(description=_('The resource metrics'), readonly=True),
     'is_available': fields.Raw(
-        description='The resource availability', readonly=True),
+        description=_('The resource availability'), readonly=True),
 })
 
 upload_fields = api.extend('UploadedResource', resource_fields, {
     'success': fields.Boolean(
-        description='Whether the upload succeeded or not.',
+        description=_('Whether the upload succeeded or not.'),
         readonly=True, default=True),
 })
 
-resources_order = api.as_list(fields.String(description='Resource ID'))
+resources_order = api.as_list(fields.String(description=_('Resource ID')))
 
 temporal_coverage_fields = api.model('TemporalCoverage', {
-    'start': fields.ISODateTime(description='The temporal coverage start date',
+    'start': fields.ISODateTime(description=_('The temporal coverage start date'),
                                 required=True),
-    'end': fields.ISODateTime(description='The temporal coverage end date',
+    'end': fields.ISODateTime(description=_('The temporal coverage end date'),
                               required=True),
 })
 
 dataset_ref_fields = api.inherit('DatasetReference', base_reference, {
-    'title': fields.String(description='The dataset title', readonly=True),
+    'title': fields.String(description=_('The dataset title'), readonly=True),
     'uri': fields.UrlFor(
         'api.dataset', lambda d: {'dataset': d},
-        description='The API URI for this dataset', readonly=True),
+        description=_('The API URI for this dataset'), readonly=True),
     'page': fields.UrlFor(
         'datasets.show', lambda d: {'dataset': d},
-        description='The web page URL for this dataset', readonly=True),
+        description=_('The web page URL for this dataset'), readonly=True),
 })
 
 community_resource_fields = api.inherit('CommunityResource', resource_fields, {
     'dataset': fields.Nested(
         dataset_ref_fields, allow_null=True,
-        description='Reference to the associated dataset'),
+        description=_('Reference to the associated dataset')),
     'organization': fields.Nested(
         org_ref_fields, allow_null=True,
-        description='The producer organization'),
+        description=_('The producer organization')),
     'owner': fields.Nested(
         user_ref_fields, allow_null=True,
-        description='The user information')
+        description=_('The user information'))
 })
 
 community_resource_page_fields = api.model(
     'CommunityResourcePage', fields.pager(community_resource_fields))
 
 dataset_fields = api.model('Dataset', {
-    'id': fields.String(description='The dataset identifier', readonly=True),
-    'title': fields.String(description='The dataset title', required=True),
+    'id': fields.String(description=_('The dataset identifier'), readonly=True),
+    'title': fields.String(description=_('The dataset title'), required=True),
     'slug': fields.String(
-        description='The dataset permalink string', required=True),
+        description=_('The dataset permalink string'), required=True),
     'description': fields.Markdown(
-        description='The dataset description in markdown', required=True),
+        description=_('The dataset description in markdown'), required=True),
     'created_at': fields.ISODateTime(
-        description='The dataset creation date', required=True),
+        description=_('The dataset creation date'), required=True),
     'last_modified': fields.ISODateTime(
-        description='The dataset last modification date', required=True),
-    'deleted': fields.ISODateTime(description='The deletion date if deleted'),
-    'featured': fields.Boolean(description='Is the dataset featured'),
+        description=_('The dataset last modification date'), required=True),
+    'deleted': fields.ISODateTime(description=_('The deletion date if deleted')),
+    'featured': fields.Boolean(description=_('Is the dataset featured')),
     'private': fields.Boolean(
-        description='Is the dataset private to the owner or the organization'),
+        description=_('Is the dataset private to the owner or the organization')),
     'tags': fields.List(fields.String),
     'badges': fields.List(fields.Nested(badge_fields),
-                          description='The dataset badges',
+                          description=_('The dataset badges'),
                           readonly=True),
     'resources': fields.List(
-        fields.Nested(resource_fields, description='The dataset resources')),
+        fields.Nested(resource_fields, description=_('The dataset resources'))),
     'community_resources': fields.List(
         fields.Nested(
             community_resource_fields,
-            description='The dataset community submitted resources')),
+            description=_('The dataset community submitted resources'))),
     'frequency': fields.String(
-        description='The update frequency', required=True,
+        description=_('The update frequency'), required=True,
         enum=UPDATE_FREQUENCIES.keys(), default=DEFAULT_FREQUENCY),
     'frequency_date': fields.ISODateTime(
-        description=('Next expected update date, you will be notified '
-                     'once that date is reached.')),
-    'extras': fields.Raw(description='Extras attributes as key-value pairs'),
-    'metrics': fields.Raw(description='The dataset metrics'),
+        description=_(('Next expected update date, you will be notified '
+                     'once that date is reached.'))),
+    'extras': fields.Raw(description=_('Extras attributes as key-value pairs')),
+    'metrics': fields.Raw(description=_('The dataset metrics')),
     'organization': fields.Nested(
         org_ref_fields, allow_null=True,
-        description='The producer organization'),
+        description=_('The producer organization')),
     'owner': fields.Nested(
-        user_ref_fields, allow_null=True, description='The user information'),
+        user_ref_fields, allow_null=True, description=_('The user information')),
     'temporal_coverage': fields.Nested(
         temporal_coverage_fields, allow_null=True,
-        description='The temporal coverage'),
+        description=_('The temporal coverage')),
     'spatial': fields.Nested(
         spatial_coverage_fields, allow_null=True,
-        description='The spatial coverage'),
+        description=_('The spatial coverage')),
     'license': fields.String(attribute='license.id',
                              default=DEFAULT_LICENSE['id'],
-                             description='The dataset license'),
+                             description=_('The dataset license')),
     'uri': fields.UrlFor(
         'api.dataset', lambda o: {'dataset': o},
-        description='The dataset API URI', required=True),
+        description=_('The dataset API URI'), required=True),
     'page': fields.UrlFor(
         'datasets.show', lambda o: {'dataset': o},
-        description='The dataset page URL', required=True),
+        description=_('The dataset page URL'), required=True),
 })
 
 dataset_page_fields = api.model('DatasetPage', fields.pager(dataset_fields))
 
 dataset_full_fields = api.inherit('DatasetFull', dataset_fields, {
-    'quality': fields.Raw(description='The dataset quality', readonly=True),
+    'quality': fields.Raw(description=_('The dataset quality'), readonly=True),
     'last_update': fields.ISODateTime(
-        description='The resources last modification date', required=True),
+        description=_('The resources last modification date'), required=True),
 })
 
 dataset_full_page_fields = api.model(
     'DatasetFullPage', fields.pager(dataset_full_fields))
 
 dataset_suggestion_fields = api.model('DatasetSuggestion', {
-    'id': fields.String(description='The dataset identifier', required=True),
-    'title': fields.String(description='The dataset title', required=True),
+    'id': fields.String(description=_('The dataset identifier'), required=True),
+    'title': fields.String(description=_('The dataset title'), required=True),
     'slug': fields.String(
-        description='The dataset permalink string', required=True),
+        description=_('The dataset permalink string'), required=True),
     'image_url': fields.String(
-        description='The dataset (organization) logo URL'),
+        description=_('The dataset (organization) logo URL')),
     'page': fields.UrlFor(
         'datasets.show_redirect', lambda d: {'dataset': d['slug']},
-        description='The web page URL for this dataset', readonly=True),
+        description=_('The web page URL for this dataset'), readonly=True),
     'score': fields.Float(
-        description='The internal match score', required=True),
+        description=_('The internal match score'), required=True),
 })

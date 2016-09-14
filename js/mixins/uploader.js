@@ -79,7 +79,7 @@ export default {
                     // Images
                     'jpeg', 'jpg', 'jpe', 'gif', 'png', 'dwg', 'svg', 'tiff', 'ecw', 'svgz',
                     // Geo
-                    'shp', 'kml', 'kmz', 'gpx', 'shx', 'ovr',
+                    'shp', 'kml', 'kmz', 'gpx', 'shx', 'ovr', 'jp2',
                     // Misc
                     'dbf', 'prj', 'sql', 'epub', 'sbn', 'sbx', 'cpg', 'lyr', 'xsd', 'owl'
                 ]

@@ -56,11 +56,12 @@ function prepare_resources() {
             $this.find('.format-label').each(function() {
                 const $self = $(this);
                 const url = $self.parent().property('url').first().attr('href');
-                const group = $Dataset.property('alternateName').value(); // This is the slug.
 
                 if (url && !url.startsWith(window.location.origin)
                 // TODO: temporary fix before we move all statics on the same server
-                    && !url.match(/:\/\/(.[^/]+)/)[1].endsWith('data.gouv.fr')) {
+                    && !url.match(/:\/\/(.[^/]+)/)[1].endsWith('data.public.lu')) {
+                        // quick fix for lockup on ortho imagery datasets
+                        const group = $Dataset.property('alternateName').value(); // This is the slug.
                         if (url.startsWith('ftp')) {
                             $self.addClass('format-label-warning');
                             addTooltip($self, i18n._('The server may be hard to reach (FTP).'));

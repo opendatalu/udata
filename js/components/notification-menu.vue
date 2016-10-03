@@ -23,7 +23,7 @@
 import API from 'api';
 
 const INITIAL_FETCH = 5 * 1000,
-      POLL_INTERVAL = 30 * 1000;
+      POLL_INTERVAL = 30000 * 1000;
 
 export default {
     replace: true,
@@ -43,7 +43,7 @@ export default {
         // Trigger an initial fetch (don't wait for poll interval)
         setTimeout(this.fetch.bind(this), INITIAL_FETCH);
         // Start polling
-        setInterval(this.fetch.bind(this), POLL_INTERVAL);
+        // setInterval(this.fetch.bind(this), POLL_INTERVAL);
     },
     methods: {
         fetch: function() {

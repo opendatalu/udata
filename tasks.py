@@ -84,7 +84,7 @@ def qa():
 @task
 def serve():
     '''Run a development server'''
-    lrun('python manage.py serve -d -r', pty=True)
+    lrun('python manage.py serve -d -r --host 0.0.0.0', pty=True)
 
 
 @task

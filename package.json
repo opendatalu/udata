@@ -63,7 +63,7 @@
   },
   "dependencies": {
     "Chart.StackedBar.js": "regaddi/Chart.StackedBar.js#1.0.3",
-    "admin-lte": "^2.3.3",
+    "admin-lte": "^2.3.2",
     "babel-polyfill": "^6.7.4",
     "bootstrap": "^3.3.6",
     "bootstrap-datepicker": "^1.5.1",

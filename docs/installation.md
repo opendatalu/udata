@@ -118,10 +118,10 @@ master= true
 
 ; Python / Environment configuration
 plugin = python3
-home = /srv/udata
+home = /srv/udata_workspace
 chdir = %(home)
-virtualenv = %(home)
-pythonpath = %(home)/bin
+virtualenv = %(home)/venv
+pythonpath = %(home)/venv/bin
 module = udata.wsgi
 callable = app
 
@@ -240,7 +240,7 @@ server {
 
     client_max_body_size 0; # Disable max client body size
 
-    root /srv/udata/public/;
+    root /srv/udata_workspace/public/;
 
     # Enable gzip compression
     gzip on;

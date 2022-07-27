@@ -2,6 +2,7 @@ import itertools
 import inspect
 import logging
 import urllib.parse
+import re
 
 from functools import wraps
 from importlib import import_module
@@ -214,6 +215,8 @@ def set_api_language():
         g.lang_code = request.args['lang']
     else:
         g.lang_code = get_locale()
+    # This is used to replace ##lang## in templates (jinja2 does not allow regex)
+    g.url_nolang = re.sub(r"/\/\w{2}\//", request.url, "##lang##")
 
 
 def extract_name_from_path(path):

@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Allow to use tag#tagname in the lists of datasets and reuses of the markdown documentation.
 
 ## 4.1.1 (2022-07-08)
 

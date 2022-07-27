@@ -749,63 +749,66 @@ msgstr "تصور"
 msgid "Connected device"
 msgstr "جهاز متصل"
 
-#: udata/core/reuse/models.py:28
+msgid "International matters"
+msgstr ""
+
+msgid "Agriculture"
+msgstr ""
+
+msgid "Justice, Law and Public Order"
+msgstr ""
+
+msgid "Economy and Finance"
+msgstr ""
+
+msgid "Energy and natural resources"
+msgstr ""
+
+msgid "Environment and Climate"
+msgstr ""
+
+msgid "Government and public sector"
+msgstr ""
+
+msgid "Population and society"
+msgstr ""
+
+msgid "Regions and local development"
+msgstr ""
+
 msgid "Health"
 msgstr ""
 
-#: udata/core/reuse/models.py:29
-msgid "Transport and mobility"
+msgid "Science and Technology"
 msgstr ""
 
-#: udata/core/reuse/models.py:30
-msgid "Housing and development"
+msgid "Transport - Charging points"
 msgstr ""
 
-#: udata/core/reuse/models.py:31
-msgid "Food and agriculture"
+msgid "Transport - IDACS"
 msgstr ""
 
-#: udata/core/reuse/models.py:32
-msgid "Culture and recreation"
+msgid "Transport"
 msgstr ""
 
-#: udata/core/reuse/models.py:33
-msgid "Economy and business"
+msgid "Education, culture and sport"
 msgstr ""
 
-#: udata/core/reuse/models.py:34
-msgid "Environment and energy"
+msgid "Geospatial data"
 msgstr ""
 
-#: udata/core/reuse/models.py:35
-msgid "Work and training"
+msgid "Earth observation and environment"
 msgstr ""
 
-#: udata/core/reuse/models.py:36
-msgid "Politics and public life"
+msgid "Meteorological data"
 msgstr ""
 
-#: udata/core/reuse/models.py:37
-msgid "Safety and security"
+msgid "Statistics"
 msgstr ""
 
-#: udata/core/reuse/models.py:38
-msgid "Education and research"
+msgid "Mobility"
 msgstr ""
 
-#: udata/core/reuse/models.py:39
-msgid "Society and demography"
-msgstr ""
-
-#: udata/core/reuse/models.py:40
-msgid "Law and justice"
-msgstr ""
-
-#: udata/core/reuse/models.py:41
-msgid "Open data tools"
-msgstr ""
-
-#: udata/core/reuse/models.py:42
 msgid "Others"
 msgstr ""
 

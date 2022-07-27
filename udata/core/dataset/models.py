@@ -445,7 +445,7 @@ class Dataset(WithMetrics, BadgeMixin, db.Owned, db.Document):
         return self.title or ''
 
     __badges__ = {
-        PIVOTAL_DATA: _('Pivotal data'),
+        # PIVOTAL_DATA: _('Pivotal data'),
     }
 
     __metrics_keys__ = [

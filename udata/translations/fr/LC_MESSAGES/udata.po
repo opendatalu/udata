@@ -749,63 +749,66 @@ msgstr "Visualisation"
 msgid "Connected device"
 msgstr "Objet connecté"
 
-#: udata/core/reuse/models.py:28
+msgid "International matters"
+msgstr "Affaires internationales"
+
+msgid "Agriculture"
+msgstr "Agriculture"
+
+msgid "Justice, Law and Public Order"
+msgstr "Justice, droit et sécurité publique"
+
+msgid "Economy and Finance"
+msgstr "Justice, droit et sécurité publique"
+
+msgid "Energy and natural resources"
+msgstr "Énergie et ressources naturelles"
+
+msgid "Environment and Climate"
+msgstr "Environnement et climat"
+
+msgid "Government and public sector"
+msgstr "Gouvernement et secteur public"
+
+msgid "Population and society"
+msgstr "Population et société"
+
+msgid "Regions and local development"
+msgstr "Régions et développement local"
+
 msgid "Health"
 msgstr "Santé"
 
-#: udata/core/reuse/models.py:29
-msgid "Transport and mobility"
-msgstr "Transports et mobilité"
+msgid "Science and Technology"
+msgstr "Science et technologie"
 
-#: udata/core/reuse/models.py:30
-msgid "Housing and development"
-msgstr "Aménagement du territoire et logement"
+msgid "Transport - Charging points"
+msgstr "Transport - Points de charge"
 
-#: udata/core/reuse/models.py:31
-msgid "Food and agriculture"
-msgstr "Alimentation et agriculture"
+msgid "Transport - IDACS"
+msgstr "Transport - IDACS"
 
-#: udata/core/reuse/models.py:32
-msgid "Culture and recreation"
-msgstr "Culture et loisirs"
+msgid "Transport"
+msgstr "Transport"
 
-#: udata/core/reuse/models.py:33
-msgid "Economy and business"
-msgstr "Économie et entreprise"
+msgid "Education, culture and sport"
+msgstr "Éducation, culture et sport"
 
-#: udata/core/reuse/models.py:34
-msgid "Environment and energy"
-msgstr "Environnement et énergie"
+msgid "Geospatial data"
+msgstr "Données géospatiales"
 
-#: udata/core/reuse/models.py:35
-msgid "Work and training"
-msgstr "Emploi et formation"
+msgid "Earth observation and environment"
+msgstr "Observation de la terre et environnement"
 
-#: udata/core/reuse/models.py:36
-msgid "Politics and public life"
-msgstr "Politique et vie publique"
+msgid "Meteorological data"
+msgstr "Données météorologiques"
 
-#: udata/core/reuse/models.py:37
-msgid "Safety and security"
-msgstr "Sécurité"
+msgid "Statistics"
+msgstr "Statistiques"
 
-#: udata/core/reuse/models.py:38
-msgid "Education and research"
-msgstr "Éducation et recherche"
+msgid "Mobility"
+msgstr "Mobilité"
 
-#: udata/core/reuse/models.py:39
-msgid "Society and demography"
-msgstr "Société et démographie"
-
-#: udata/core/reuse/models.py:40
-msgid "Law and justice"
-msgstr "Droit et justice"
-
-#: udata/core/reuse/models.py:41
-msgid "Open data tools"
-msgstr "Outils open data"
-
-#: udata/core/reuse/models.py:42
 msgid "Others"
 msgstr "Autres"
 

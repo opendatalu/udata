@@ -216,7 +216,7 @@ def set_api_language():
     else:
         g.lang_code = get_locale()
     # This is used to replace ##lang## in templates (jinja2 does not allow regex)
-    g.url_nolang = re.sub(r"/\/\w{2}\//", request.url, "##lang##")
+    g.url_nolang = re.sub(r"/\/\w{2}\//", "##lang##", request.url)
 
 
 def extract_name_from_path(path):

@@ -1,3 +1,4 @@
+import re
 import pkgutil
 
 from contextlib import contextmanager
@@ -187,6 +188,9 @@ def _pull_lang_code(endpoint, values):
                 request.url.replace('/{0}/'.format(lang_code),
                                     '/{0}/'.format(default_lang))))
     g.lang_code = lang_code
+    
+    # This is used to replace ##lang## in templates (jinja2 does not allow regex)
+    g.url_nolang = re.sub(r"\/\w{2}\/", "/##lang##/", request.url)
 
 
 def redirect_to_lang(*args, **kwargs):

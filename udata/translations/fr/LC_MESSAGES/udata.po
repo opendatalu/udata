@@ -759,7 +759,7 @@ msgid "Justice, Law and Public Order"
 msgstr "Justice, droit et sécurité publique"
 
 msgid "Economy and Finance"
-msgstr "Justice, droit et sécurité publique"
+msgstr "Économie et finances"
 
 msgid "Energy and natural resources"
 msgstr "Énergie et ressources naturelles"

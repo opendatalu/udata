@@ -21,7 +21,7 @@
     "Add some related datasets": "Ajoutez des jeux de données associés",
     "Add some related reuses": "Ajoutez des réutilisations associées",
     "Add your first resources": "Ajouter vos premières ressources",
-    "All your resources looks to be directly available. That is great!": "Toutes vos ressources semblent être accessibles. Super !",
+    "All your resources seem to be directly available. That is great!": "Toutes vos ressources semblent être accessibles. Super !",
     "An error occured": "Une erreur est survenue",
     "An error occured while submitting your comment": "Une erreur est survenue lors de l'envoi de votre commentaire",
     "An error {status} occured": "Une erreur {status} est survenue",
@@ -502,5 +502,10 @@
     "{name} has been unscheduled": "{name} a été déplanifié",
     "{start} to {end}": "{start} à {end}",
     "{user} is not a member of this organization anymore": "{user} n'es plus membre de cette organisation",
-    "{user} is now {role} of this organization": "{user} est maintenant {role} de cette organisation"
+    "{user} is now {role} of this organization": "{user} est maintenant {role} de cette organisation",
+    "Body Type": "Type de Corp",
+    "Documentation": "Documentation",
+    "The data does not seem to be up-to-date according to the chosen update frequency.": "Les données ne paraisent pas à jour par rapport à la fréquence d'actualisation choisi.",
+    "The documentation of your resources is crucial for reusers.": "La documentation de vos resources est crucial pour les réutilisateurs",
+    "Your resources seem to be documented. That is great!": "Votres resources paraisent documentés. Ça c'est bien!"
 }

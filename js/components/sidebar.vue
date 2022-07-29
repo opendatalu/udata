@@ -3,20 +3,6 @@
 <aside class="main-sidebar">
     <scrollbox v-ref:scrollbox>
         <section class="sidebar">
-            <!-- search form -->
-            <div class="sidebar-form">
-                <form method="get" @submit.prevent="onSearch">
-                    <div class="input-group">
-                        <input type="text" name="q" class="form-control"
-                            :placeholder="search_label" v-el:terms />
-                        <span class="input-group-btn">
-                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>
-                </form>
-            </div>
             <!-- End form -->
             <ul class="sidebar-menu">
                 <sidebar-menu-item v-for="item in menu"

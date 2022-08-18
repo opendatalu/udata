@@ -362,7 +362,7 @@ class Defaults(object):
     # Whether or not to allow credentials in URLs submission.
     URLS_ALLOW_CREDENTIALS = True
     # List of allowed URL schemes.
-    URLS_ALLOWED_SCHEMES = ('http', 'https', 'ftp', 'ftps')
+    URLS_ALLOWED_SCHEMES = ('https', 'ftp', 'ftps') # 'http', 
     # List of allowed TLDs.
     URLS_ALLOWED_TLDS = tld_set
 

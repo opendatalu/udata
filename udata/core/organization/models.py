@@ -119,7 +119,7 @@ class Organization(WithMetrics, BadgeMixin, db.Datetimed, db.Document):
     meta = {
         'indexes': [
             '$name',
-            '$acronym',
+            # '$acronym',
             'created_at',
             'slug',
             'metrics.reuses',

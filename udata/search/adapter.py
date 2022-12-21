@@ -44,7 +44,7 @@ class ModelSearchAdapter:
             parser.add_argument('page', type=int, location='args',
                                 default=1, help='The page to display')
             parser.add_argument('page_size', type=int, location='args',
-                                default=20, help='The page size')
+                                default=40, help='The page size')
         return parser
 
     @classmethod

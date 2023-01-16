@@ -1,7 +1,7 @@
 <template>
 <div class="calendar" :class="[ 'view' ]">
     <div class="calendar-{{view}}">
-        <nav>
+        <nav role="navigation">
             <button class="prev" @click.prevent="previous" :disabled="previousDisabled">
                 <span class="fa fa-chevron-left"></span>
             </button>

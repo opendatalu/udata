@@ -19,7 +19,7 @@
       <span class="logo-lg">{{$root.site.title}}</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
+    <nav class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->
         <a class="sidebar-toggle" role="button" @click="click($event)">
             <span class="sr-only">Toggle navigation</span>

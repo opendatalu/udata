@@ -1,5 +1,5 @@
 import warnings
-
+import logging
 from abc import ABC, abstractmethod
 
 from flask import current_app
@@ -11,6 +11,10 @@ from udata.app import cache
 # Don't forget to flush cache on new configuration or plugin
 CACHE_DURATION = 60 * 60 * 24
 CACHE_KEY = 'udata.preview.enabled_plugins'
+
+
+log = logging.getLogger(__name__)
+
 
 
 class PreviewWarning(UserWarning):
@@ -80,6 +84,12 @@ def get_preview_url(resource):
     :return: a preview url to be displayed into an iframe or a new window
     :rtype: HttpResponse
     '''
+
+    for p in get_enabled_plugins():
+        can_preview = "yes" if p.can_preview() else "no"
+        url = p.preview_url(resource) if p.can_preview() else "-"
+        log.warning("Enabled plugin: %s, can preview: %s, url: %s" % (str(p), can_preview, url))
+
     candidates = (p.preview_url(resource)
                   for p in get_enabled_plugins()
                   if p.can_preview(resource))

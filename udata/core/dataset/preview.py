@@ -67,6 +67,8 @@ def get_enabled_plugins():
     Plugins are sorted, defaults come last
     '''
     plugins = entrypoints.get_enabled('udata.preview', current_app).values()
+    log.warning(plugins)
+
     valid = [p for p in plugins if issubclass(p, PreviewPlugin)]
     for plugin in plugins:
         if plugin not in valid:

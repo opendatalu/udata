@@ -1,6 +1,7 @@
 import email_validator
 from flask import current_app
 from udata.tasks import task
+from udata.patch.mail import Message
 
 
 @task
@@ -13,13 +14,15 @@ def sendmail(msg):
 
 
 class UdataMailUtil:
+    """
+    A class which is used by the flask-security Plug-in.
+    Other mails may be sent by ../mail.py 
+    """
 
     def __init__(self, app):
         self.app = app
 
     def send_mail(self, template, subject, recipient, sender, body, html, user, **kwargs):
-        from flask_mail import Message
-
         # In Flask-Mail, sender can be a two element tuple -- (name, address)
         if isinstance(sender, tuple) and len(sender) == 2:
             sender = (str(sender[0]), str(sender[1]))
@@ -32,15 +35,19 @@ class UdataMailUtil:
         sendmail.delay(msg)
 
     def normalize(self, email):
-        # Called at registration and login
-        # Calls validate method with deliverability check disabled to prevent
-        # login failure for existing users without a valid email domain name
+        """
+        Called at registration and login
+        Calls validate method with deliverability check disabled to prevent
+        login failure for existing users without a valid email domain name
+        """
         return self.validate(email, validation_args={"check_deliverability": False})
 
     def validate(self, email, validation_args=None):
-        # Called at registration only
-        # Checks email domain name deliverability
-        # To prevent false email to register
+        """
+        Called at registration only
+        Checks email domain name deliverability
+        To prevent false email to register
+        """
         validator_args = self.app.config["SECURITY_EMAIL_VALIDATOR_ARGS"] or {}
         if validation_args:
             validator_args.update(validation_args)

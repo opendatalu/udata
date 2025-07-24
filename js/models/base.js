@@ -4,7 +4,7 @@ import Vue from 'vue';
 import API from 'api';
 import i18n from 'i18n';
 import config from 'config';
-import mask from './mask';
+import mask from 'models/mask';
 import Raven from 'raven';
 import validator from 'models/validator';
 import {isString} from 'utils';
@@ -190,7 +190,7 @@ export class Model extends Base {
      * @return {Object} A JSON schema
      */
     get __schema__() {
-        return API.definitions[this.__class__] || {};
+        return API.definitions[this.__class__] || API.definitions[this.__class__ + ' (write)'] || {};
     }
 
     /**

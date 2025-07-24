@@ -1,0 +1,21 @@
+{% extends 'mail/base.txt' %}
+
+{% block body %}
+{{ first_sentence }}
+
+File name: {{filename}}
+
+File path: {{filepath}}
+
+Dataset id: {{dataset_id}}
+
+Dataset URL: {{dataset_url}}
+
+Resource id: {{resource_id}}
+
+Resource URL: {{resource_url}}
+
+Report:
+
+ {{report}}
+{% endblock %}

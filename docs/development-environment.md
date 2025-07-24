@@ -26,6 +26,15 @@ You can also generate the `.pip` files manually from the `.in` files without com
 pip-compile requirements/install.in --output-file requirements/install.pip
 ```
 
+> WARNING: whenever the dependencies change, the `udata.pip` needs to be manually recompiled on plugins that use the same virtualenv and pip-compile against udata, like
+  [the udata-front project](https://github.com/datagouv/udata-front), eg:
+
+  ```shell
+  cd udata-front
+  pip-compile requirements/udata.in --output-file=requirements/udata.pip
+  ```
+
+
 ### Optmizing performances with Cython
 
 Some dependencies have an optional compilation support for Cython
@@ -38,24 +47,36 @@ $ pip install -r requirements/develop.pip
 $ pip install -e .
 ```
 
-### Macos Big Sur caveat
+### Mac OS caveats
+
+#### Package installation fails
 
 If installing `cryptography` fails:
 
 ```
-brew install openssl
-export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
-export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
+brew install openssl@1.1
+export LDFLAGS="-L$(brew --prefix openssl@1.1)/lib"
+export CPPFLAGS="-I$(brew --prefix openssl@1.1)/include"
 pip install -r requirements/develop.pip
 ```
 
 If installing `Pillow` fails:
+
 ```
 brew install libjpeg
 pip install -r requirements/develop.pip
 ```
 
-You should be to start using and contributing to udata.
+#### Local web server is slow
+
+If you're using `{something}.local` as your `SITE_NAME`, you need to add an ipv6 resolution to this FQDN:
+
+```
+127.0.0.1   dev.local
+::1         dev.local
+```
+
+[Reference and context here](https://superuser.com/a/1596341).
 
 ## Running the project
 
@@ -109,8 +130,6 @@ or [the documentation](building-documentation.md).
 
 [Python Virtual Environments - a Primer]: https://realpython.com/blog/python/python-virtual-environments-a-primer/
 [dev-server]: http://localhost:7000/
-[docker-compose-install]: https://docs.docker.com/compose/install/
-[docker-compose]: https://docs.docker.com/compose/
 [git]: https://git-scm.com/
 [github]: https://github.com/opendatateam/udata
 [new issue]: https://github.com/opendatateam/udata/issues/new

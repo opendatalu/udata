@@ -16,7 +16,6 @@
 <meta property="og:description" content="{{ description }}" />
 <meta property="og:image" content="{{ image }}" />
 <meta name="static-root" content="{{ static('', _burst=False) }}" />
-<meta name="theme-static-root" content="{{ theme_static('') }}" />
 <meta name="api-root" content="{{ url_for('api.root') }}" />
 <meta name="admin-root" content="{{ url_for('admin.index') }}" />
 <meta name="api-specs" content="{{ url_for('api.specs', _external=True) }}"/>
@@ -42,13 +41,44 @@
 />
 {% endif %}
 
+{% if config.MCAPTCHA_URL and config.MCAPTCHA_SITE_KEY %}
+<meta name="mcaptcha-config" content="%7B%22mcaptcha_site_key%22%3A%22{{config.MCAPTCHA_SITE_KEY}}%22%2C%22mcaptcha_url%22%3A%22{{config.MCAPTCHA_URL}}%22%7D" />
+<script src="https://unpkg.com/@mcaptcha/vanilla-glue@0.1.0-alpha-3/dist/index.js"></script>
+<script>
+// On page load, initialize the mCaptcha widget
+// We also keep glboally the mcaptcha token received to make life easier with vue...
+var mcaptchaToken = null;
+document.addEventListener('DOMContentLoaded', function() {
+    // Every 300ms check if div#mcaptcha__widget-container exists
+    // and if so, check if it is empty, and if so, load the mCaptcha widget
+    // We have to do like this becuase mcaptcha does not support vue integrations yet.
+    let interval = setInterval(function() {
+        let widgetContainer = document.getElementById('mcaptcha__widget-container');
+        if (widgetContainer && widgetContainer.innerHTML === '') {
+            // clearInterval(interval);
+            let config = {
+                widgetLink: new URL(
+                    "{{config.MCAPTCHA_URL}}/widget/?sitekey={{config.MCAPTCHA_SITE_KEY}}"
+                ),
+            };
+            new mcaptchaGlue.default(config);
+        } else {
+            mcaptchaToken = document.getElementById('mcaptcha__token')?.value;
+        }
+    }, 300);
+});
+</script>
+{% endif %}
+
 <meta name="check-urls" content="{{ config.LINKCHECKING_ENABLED|tojson }}" />
 <meta name="unchecked-types" content="{{ config.LINKCHECKING_UNCHECKED_TYPES|tojson|urlencode }}" />
 <meta name="territory-enabled" content="{{ 'true' if config.ACTIVATE_TERRITORIES else 'false' }}">
 <meta name="delete-me-enabled" content="{{ 'true' if config.DELETE_ME else 'false' }}">
 <meta name="search-autocomplete-enabled" content="{{ 'true' if config.SEARCH_AUTOCOMPLETE_ENABLED else 'false' }}">
 <meta name="search-autocomplete-debounce" content="{{ config.SEARCH_AUTOCOMPLETE_DEBOUNCE }}">
-<meta name="dataset-max-resources-uncollapsed" content="{{ config.DATASET_MAX_RESOURCES_UNCOLLAPSED }}">
+{% if config.ORG_BID_FORMAT %}
+    <meta name="org-bid-format" content="{{ config.ORG_BID_FORMAT }}">
+{% endif %}
 <meta name="markdown-config" content="{{ {
     'tags': config.MD_ALLOWED_TAGS,
     'attributes': config.MD_ALLOWED_ATTRIBUTES,
@@ -63,5 +93,9 @@
     config.LICENSE_GROUPS|tojson|urlencode
 }} />
 <meta name="read-only-enabled" content="{{ 'true' if config.READ_ONLY_MODE else 'false' }}">
+<meta name="harvest-enable-manual-run" content="{{ 'true' if config.HARVEST_ENABLE_MANUAL_RUN else 'false' }}">
+{% if config.HARVEST_VALIDATION_CONTACT_FORM %}
+<meta name="harvest-validation-contact-form" content="{{config.HARVEST_VALIDATION_CONTACT_FORM}}">
+{% endif %}
 
 {% endmacro %}

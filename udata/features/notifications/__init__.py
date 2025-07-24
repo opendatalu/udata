@@ -1,5 +1,3 @@
-from importlib import import_module
-
 import logging
 
 log = logging.getLogger(__name__)

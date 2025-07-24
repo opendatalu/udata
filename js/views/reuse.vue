@@ -53,11 +53,9 @@
 </template>
 
 <script>
-import moment from 'moment'
+import API from 'api';
 import { ModelPage } from 'models/base'
 import Reuse from 'models/reuse'
-import Dataset from 'models/dataset'
-import Vue from 'vue'
 import Discussions from 'models/discussions'
 import mask from 'models/mask'
 // Widgets
@@ -123,6 +121,19 @@ export default {
             method: this.transfer_request
           }
         )
+        if (!this.reuse.archived) {
+          actions.push({
+            label: this._('Archive'),
+            icon: 'archive',
+            method: this.archive
+          })
+        } else {
+          actions.push({
+            label: this._('Unarchive'),
+            icon: 'undo',
+            method: this.unarchive
+          })
+        }
         if (!this.reuse.deleted) {
           actions.push({
             label: this._('Delete'),
@@ -194,6 +205,22 @@ export default {
     edit() {
       this.$go({ name: 'reuse-edit', params: { oid: this.reuse.id } })
     },
+    archive() {
+      this.reuse.archived = new Date().toISOString();
+      API.reuses.update_reuse({reuse: this.reuse.id, payload: this.reuse},
+          (response) => {
+              this.reuse.on_fetched(response);
+          }
+      );
+    },
+    unarchive() {
+      this.reuse.archived = null;
+      API.reuses.update_reuse({reuse: this.reuse.id, payload: this.reuse},
+          (response) => {
+              this.reuse.on_fetched(response);
+          }
+      );
+    },
     confirm_delete() {
       this.$root.$modal(require('components/reuse/delete-modal.vue'), {
         reuse: this.reuse
@@ -213,6 +240,18 @@ export default {
       this.$root.$modal(require('components/badges/modal.vue'), {
         subject: this.reuse
       })
+    },
+    addOrRemoveBadge(id, value, _class, label) {
+        const existing = this.badges.find(b => b.id === id);
+        if (value && !existing) {
+            this.badges.push({
+                id,
+                class: _class,
+                label
+            });
+        } else if (!value && existing) {
+            this.badges.splice(this.badges.indexOf(existing), 1);
+        }
     }
   },
   route: {
@@ -231,16 +270,10 @@ export default {
       }
     },
     'reuse.deleted': function (deleted) {
-      if (deleted) {
-        this.badges = [
-          {
-            class: 'danger',
-            label: this._('Deleted')
-          }
-        ]
-      } else {
-        this.badges = []
-      }
+      this.addOrRemoveBadge('deleted', deleted, 'danger', this._('Deleted'));
+    },
+    'reuse.archived': function(archived) {
+      this.addOrRemoveBadge('archived', archived, 'warning', this._('Archived'));
     }
   }
 }

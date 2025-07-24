@@ -1,0 +1,76 @@
+[1mdiff --git a/udata/storage/commands.py b/udata/storage/commands.py[m
+[1mindex 5d8aaa171..416a09fc7 100644[m
+[1m--- a/udata/storage/commands.py[m
+[1m+++ b/udata/storage/commands.py[m
+[36m@@ -1,7 +1,10 @@[m
+ import logging[m
+[32m+[m[32mfrom typing import Optional[m[41m[m
+[32m+[m[32mfrom bson import ObjectId[m[41m[m
+ [m
+ from pathlib import Path[m
+ import asyncio[m
+[32m+[m[32mimport click[m[41m[m
+ [m
+ from udata.commands import cli[m
+ from udata.core.storages.file_scan import trigger_anvivirus_scan, ScanResultEnum[m
+[36m@@ -53,7 +56,8 @@[m [mdef configure_scan_loggers():[m
+ [m
+ [m
+ @grp.command()[m
+[31m-def scan_av():[m
+[32m+[m[32m@click.option("--from-id", default=None, help="Start scanning from this dataset ID")[m[41m[m
+[32m+[m[32mdef scan_av(from_id: Optional[str] = None):[m[41m[m
+     """[m
+     Iterate all datasets and their resources[m
+     Scan each resource[m
+[36m@@ -62,8 +66,20 @@[m [mdef scan_av():[m
+     """[m
+ [m
+     logger_clean, logger_infected, logger_error = configure_scan_loggers()[m
+[31m-    datasets = Dataset.objects.order_by("created_at_internal")[m
+[31m-    for dataset in datasets:[m
+[32m+[m[41m[m
+[32m+[m[32m    # Build query with optional from_id filter and ordering[m[41m[m
+[32m+[m[32m    query = Dataset.objects.order_by("created_at_internal")[m[41m[m
+[32m+[m[32m    if from_id:[m[41m[m
+[32m+[m[32m        try:[m[41m[m
+[32m+[m[32m            object_id = ObjectId(from_id)[m[41m[m
+[32m+[m[32m            query = query.filter(created_at_internal__gt=object_id)[m[41m[m
+[32m+[m[32m        except Exception as e:[m[41m[m
+[32m+[m[32m            raise click.ClickException([m[41m[m
+[32m+[m[32m                f"Invalid ObjectId format for --from-id: {from_id}. Error: {e}"[m[41m[m
+[32m+[m[32m            )[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    # Process datasets[m[41m[m
+[32m+[m[32m    for dataset in query:[m[41m[m
+         for resource in dataset.resources:[m
+             identifier = ([m
+                 f"{dataset.id}/{resource.id} - {resource.url} ({resource.title})"[m
+[36m@@ -71,18 +87,23 @@[m [mdef scan_av():[m
+ [m
+             log.info(f"Scanning {identifier}")[m
+ [m
+[31m-            fs_filename = ([m
+[31m-                "test-json/20240827-084334/communes.json"  # resource.fs_filename[m
+[31m-            )[m
+[32m+[m[32m            # fs_filename = ([m[41m[m
+[32m+[m[32m            #     "test-json/20240827-084334/communes.json"  # Use actual filename logic[m[41m[m
+[32m+[m[32m            # )[m[41m[m
+[32m+[m[32m            fs_filename = resource.fs_filename[m[41m[m
+ [m
+             try:[m
+[31m-                result = asyncio.run(trigger_anvivirus_scan(fs_filename, resource.id, send_mail=False))[m
+[32m+[m[32m                result = asyncio.run([m[41m[m
+[32m+[m[32m                    trigger_anvivirus_scan(fs_filename, resource.id, send_mail=False)[m[41m[m
+[32m+[m[32m                )[m[41m[m
+             except FileNotFound as e:[m
+                 logger_error.info(identifier)[m
+                 logger_error.exception(e)[m
+[32m+[m[32m                result = None[m[41m[m
+             except Exception as e:[m
+                 logger_error.info(identifier)[m
+                 logger_error.exception(e)[m
+[32m+[m[32m                result = None[m[41m[m
+ [m
+             if result == ScanResultEnum.OK:[m
+                 logger_clean.info(identifier)[m

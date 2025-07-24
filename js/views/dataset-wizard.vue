@@ -6,7 +6,6 @@
 
 <script>
 import Dataset from 'models/dataset';
-import Vue from 'vue';
 import Wizard from 'components/widgets/wizard.vue';
 // Steps
 import PublishAs from 'components/widgets/publish-as.vue';
@@ -22,7 +21,9 @@ export default {
         dataset: {
             type: Dataset,
             default() {
-                return new Dataset();
+                let dataset = new Dataset();
+                dataset.license = "cc-zero"
+                return dataset
             }
         }
     },

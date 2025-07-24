@@ -16,13 +16,27 @@ and storing them into udata to be able to search and find them.
 After a harvester for a given source has been created and validated,
 it will run either on demand or periodically.
 
-A harvesting job is done in three separate phases:
+Running an harvester for a given source follow this pseudo-code in specific backends:
+```
+def inner_harvest():
+    datasets = get_datasets_from_source()
+    for dataset in datasets:
+        self.process_dataset(some_id, args1, args2, args3)
 
-1. `initialize`: the harvester fetches remote identifiers to harvest and create a single task for each.
-2. `process`: each task created in the `initialize` is executed. Each item is processed independently.
-3. `finalize`: when all tasks are done, the `finalize` is a closure for the job and mark it as done.
+def inner_process_dataset(item: HarvestItem, args1, args2, args3):
+    dataset = self.get_dataset(item.remote_id)
 
-Harvested dataset will have the following `extras` properties:
+    update_dataset(dataset, args1, args2)
+
+    return dataset
+```
+
+The call to `process_dataset` is a wrapper:
+1. Create the `HarvestItem`
+2. Call the `inner_process_dataset` (backend dependent update of the `Dataset` object // without saving! See step 5.)
+3. Catch errors to save the logs inside the `HarvestItem`
+4. Update the `HarvestMetadata` inside the `Dataset` with domain, source, last_update, etc.
+5. Save the updated `Dataset` (if not in dryrun mode)
 
 | Property            | Meaning                                                          |
 |---------------------|------------------------------------------------------------------|
@@ -117,7 +131,7 @@ Fields are extracted according these rules:
 | last_modified | dct:modified                       |                                        |
 | format        | dct:format                         |                                        |
 | mime          | dcat:mediaType                     |                                        |
-| filesize      | dcat:bytesSize                     |                                        |
+| filesize      | dcat:byteSize                     |                                        |
 | checksum      | spdx:checksum                      | See [Checksum](#checksum)              |
 
 
@@ -193,7 +207,7 @@ class RandomBackend(BaseBackend):
 
         dataset.title = faker.sentence()
         dataset.description = faker.text()
-        dataset.tags = list(set(faker.words(nb=faker.pyint())))
+        dataset.tags = list(set(faker.tags(nb=faker.pyint())))
 
         # Resources
         for i in range(faker.pyint()):
@@ -240,3 +254,4 @@ You may take a look at the [existing backends][backends-repository] to see exiti
 [DCAT]: https://www.w3.org/TR/vocab-dcat/
 [backends-repository]: https://github.com/opendatateam/udata/tree/master/udata/harvest/backends
 [gov-uk-references]: http://reference.data.gov.uk/
+[cookiecutter-template]: https://github.com/opendatateam/cookiecutter-udata-harvester

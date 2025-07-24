@@ -58,8 +58,16 @@ If you’re not familiar with open-source workflows or our set of technologies, 
 
 **NOTE**: If you are fixing an existing issue,
 don't forget to end your commit message with `(fix #XXX)`
-where `XXX` is the original issue number. This will improve the tracability
+where `XXX` is the original issue number. You can also add
+`fix #XXX` in the PR description. This will improve the tracability
 and will magicaly close the issue as soon as the commit is merged.
+
+### Merging
+
+When the PR has been approved (at least once), you are free to merge it
+in master. We have a squash & merge strategy and pay attention to having
+a clean commit message. You can then delete the branch. If linked with
+an issue, the issue should be closed automatically.
 
 ## Discussing strategies
 
@@ -69,9 +77,23 @@ We’re trying to develop this project in the open as much as possible. We creat
 
 ### Python style guide
 
-We follow the PEP-0008 and PEP-0257 as mush as possible in the respect of PEP-0020.
+We follow the PEP-0008 and PEP-0257 as much as possible in the respect of PEP-0020.
 
 On top of that, we apply the [Python Style Guide][py-style-guide] from Google.
+Linting, formatting and import sorting are done automatically by [Ruff](https://docs.astral.sh/ruff/) launched by a pre-commit hook. So, before contributing to the repository, it is necessary to initialize the pre-commit hooks:
+```bash
+pre-commit install
+```
+Once this is done, code formatting and linting, as well as import sorting, will be automatically checked before each commit.
+
+If you cannot use pre-commit, it is necessary to format, lint, and sort imports with [Ruff](https://docs.astral.sh/ruff/) before committing:
+```bash
+ruff check --fix .
+ruff format .
+```
+
+> WARNING: running `ruff` on the codebase will lint and format all of it, whereas using `pre-commit` will
+  only be done on the staged files.
 
 ### JavaScript style guide
 

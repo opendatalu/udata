@@ -145,9 +145,19 @@ export const tags = _jsonMeta('tags-config');
 export const license_groups = _jsonMeta('license-groups-options') && Object.fromEntries(_jsonMeta('license-groups-options'));
 
 /**
- * Max number of resources to display uncollapsed in dataset view
+ * Harvest validation contact form
  */
-export const dataset_max_resources_uncollapsed = _jsonMeta('dataset-max-resources-uncollapsed');
+export const harvest_validation_contact_form = _meta('harvest-validation-contact-form')
+
+/**
+ * Harvest : enable manual run from producers
+ */
+export const harvest_enable_manual_run = _jsonMeta('harvest-enable-manual-run')
+
+/**
+ * The expected business identification format
+ */
+export const org_bid_format = _meta('org-bid-format')
 
 /**
  * Markdown configuration.
@@ -170,6 +180,12 @@ export const search_autocomplete_debounce = _jsonMeta('search-autocomplete-debou
  */
 export const read_only_enabled = _jsonMeta('read-only-enabled');
 
+/**
+ * This allows to configure the mcaptcha service.
+ * It holds either a dict with mcaptcha_site_key and mcaptcha_url, or false.
+ */
+export const mcaptcha_config = _jsonMeta('mcaptcha-config');
+
 
 export default {
     user,
@@ -191,9 +207,11 @@ export default {
     hidpi,
     tags,
     license_groups,
-    dataset_max_resources_uncollapsed,
+    harvest_validation_contact_form,
+    org_bid_format,
     is_search_autocomplete_enabled,
     search_autocomplete_debounce,
     markdown,
     read_only_enabled,
+    mcaptcha_config,
 };

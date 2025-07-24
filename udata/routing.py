@@ -1,19 +1,22 @@
-from bson import ObjectId
 from uuid import UUID
 
-from flask import request, redirect, url_for
-from mongoengine.errors import InvalidQueryError
-from werkzeug.routing import BaseConverter, NotFound, PathConverter
+from bson import ObjectId
+from flask import redirect, request, url_for
+from mongoengine.errors import InvalidQueryError, ValidationError
+from werkzeug.exceptions import NotFound
+from werkzeug.routing import BaseConverter, PathConverter
 from werkzeug.urls import url_quote
 
 from udata import models
-from udata.models import db
+from udata.core.dataservices.models import Dataservice
 from udata.core.spatial.models import GeoZone
 from udata.i18n import ISO_639_1_CODES
+from udata.mongo import db
 
 
 class LazyRedirect(object):
-    '''Store location for lazy redirections'''
+    """Store location for lazy redirections"""
+
     def __init__(self, arg):
         self.arg = arg
 
@@ -21,25 +24,23 @@ class LazyRedirect(object):
 class LanguagePrefixConverter(BaseConverter):
     def __init__(self, map):
         super(LanguagePrefixConverter, self).__init__(map)
-        self.regex = '(?:%s)' % '|'.join(ISO_639_1_CODES)
+        self.regex = "(?:%s)" % "|".join(ISO_639_1_CODES)
 
 
 class ListConverter(BaseConverter):
     def to_python(self, value):
-        return value.split(',')
+        return value.split(",")
 
     def to_url(self, values):
-        return ','.join(super(ListConverter, self).to_url(value)
-                        for value in values)
+        return ",".join(super(ListConverter, self).to_url(value) for value in values)
 
 
 class PathListConverter(PathConverter):
     def to_python(self, value):
-        return value.split(',')
+        return value.split(",")
 
     def to_url(self, values):
-        return ','.join(super(PathListConverter, self).to_url(value)
-                        for value in values)
+        return ",".join(super(PathListConverter, self).to_url(value) for value in values)
 
 
 class UUIDConverter(BaseConverter):
@@ -51,7 +52,7 @@ class UUIDConverter(BaseConverter):
 
 
 class ModelConverter(BaseConverter):
-    '''
+    """
     A base class helper for model helper.
 
     Allow to give model or slug or ObjectId as parameter to url_for().
@@ -64,13 +65,13 @@ class ModelConverter(BaseConverter):
     * fetch by id
     * fetch by slug
     * raise 404
-    '''
+    """
 
     model = None
 
     @property
     def has_slug(self):
-        return hasattr(self.model, 'slug') and isinstance(self.model.slug, db.SlugField)
+        return hasattr(self.model, "slug") and isinstance(self.model.slug, db.SlugField)
 
     @property
     def has_redirected_slug(self):
@@ -85,7 +86,7 @@ class ModelConverter(BaseConverter):
     def to_python(self, value):
         try:
             return self.model.objects.get_or_404(id=value)
-        except NotFound:
+        except (NotFound, ValidationError):
             pass
         try:
             quoted = self.quote(value)
@@ -108,9 +109,9 @@ class ModelConverter(BaseConverter):
             return self.quote(obj)
         elif isinstance(obj, (ObjectId, UUID)):
             return str(obj)
-        elif getattr(obj, 'slug', None):
+        elif getattr(obj, "slug", None):
             return self.quote(obj.slug)
-        elif getattr(obj, 'id', None):
+        elif getattr(obj, "id", None):
             return str(obj.id)
         else:
             raise ValueError('Unable to serialize "%s" to url' % obj)
@@ -118,6 +119,10 @@ class ModelConverter(BaseConverter):
 
 class DatasetConverter(ModelConverter):
     model = models.Dataset
+
+
+class DataserviceConverter(ModelConverter):
+    model = Dataservice
 
 
 class CommunityResourceConverter(ModelConverter):
@@ -144,8 +149,16 @@ class PostConverter(ModelConverter):
     model = models.Post
 
 
+class ContactPointConverter(ModelConverter):
+    model = models.ContactPoint
+
+
+class ReportConverter(ModelConverter):
+    model = models.Report
+
+
 class TerritoryConverter(PathConverter):
-    DEFAULT_PREFIX = 'fr'  # TODO: make it a setting parameter
+    DEFAULT_PREFIX = "fr"  # TODO: make it a setting parameter
 
     def to_python(self, value):
         """
@@ -156,10 +169,10 @@ class TerritoryConverter(PathConverter):
 
         Note that the slug is not significative but cannot be omitted.
         """
-        if '/' not in value:
+        if "/" not in value:
             return NotFound()
 
-        level, code = value.split('/')[:2]  # Ignore optional slug
+        level, code = value.split("/")[:2]  # Ignore optional slug
 
         geoid = GeoZone.SEPARATOR.join([level, code])
         zone = GeoZone.objects.resolve(geoid)
@@ -176,29 +189,23 @@ class TerritoryConverter(PathConverter):
         """
         Reconstruct the URL from level name, code or datagouv id and slug.
         """
-        level_name = getattr(obj, 'level_name', None)
+        level_name = getattr(obj, "level_name", None)
         if not level_name:
             raise ValueError('Unable to serialize "%s" to url' % obj)
 
-        code = getattr(obj, 'code', None)
-        slug = getattr(obj, 'slug', None)
-        validity = getattr(obj, 'validity', None)
+        code = getattr(obj, "code", None)
+        slug = getattr(obj, "slug", None)
         if code and slug:
-            return '{level_name}/{code}@{start_date}/{slug}'.format(
-                level_name=level_name,
-                code=code,
-                start_date=getattr(validity, 'start', None) or 'latest',
-                slug=slug
-            )
+            return "{level_name}/{code}/{slug}".format(level_name=level_name, code=code, slug=slug)
         else:
             raise ValueError('Unable to serialize "%s" to url' % obj)
 
 
 def lazy_raise_or_redirect():
-    '''
+    """
     Raise exception lazily to ensure request.endpoint is set
     Also perform redirect if needed
-    '''
+    """
     if not request.view_args:
         return
     for name, value in request.view_args.items():
@@ -209,20 +216,23 @@ def lazy_raise_or_redirect():
             new_args = request.view_args
             new_args[name] = value.arg
             new_url = url_for(request.endpoint, **new_args)
-            return redirect(new_url, code=308)
+            return redirect(new_url, 308)
 
 
 def init_app(app):
     app.before_request(lazy_raise_or_redirect)
-    app.url_map.converters['lang'] = LanguagePrefixConverter
-    app.url_map.converters['list'] = ListConverter
-    app.url_map.converters['pathlist'] = PathListConverter
-    app.url_map.converters['uuid'] = UUIDConverter
-    app.url_map.converters['dataset'] = DatasetConverter
-    app.url_map.converters['crid'] = CommunityResourceConverter
-    app.url_map.converters['org'] = OrganizationConverter
-    app.url_map.converters['reuse'] = ReuseConverter
-    app.url_map.converters['user'] = UserConverter
-    app.url_map.converters['topic'] = TopicConverter
-    app.url_map.converters['post'] = PostConverter
-    app.url_map.converters['territory'] = TerritoryConverter
+    app.url_map.converters["lang"] = LanguagePrefixConverter
+    app.url_map.converters["list"] = ListConverter
+    app.url_map.converters["pathlist"] = PathListConverter
+    app.url_map.converters["uuid"] = UUIDConverter
+    app.url_map.converters["dataset"] = DatasetConverter
+    app.url_map.converters["dataservice"] = DataserviceConverter
+    app.url_map.converters["crid"] = CommunityResourceConverter
+    app.url_map.converters["org"] = OrganizationConverter
+    app.url_map.converters["reuse"] = ReuseConverter
+    app.url_map.converters["user"] = UserConverter
+    app.url_map.converters["topic"] = TopicConverter
+    app.url_map.converters["post"] = PostConverter
+    app.url_map.converters["territory"] = TerritoryConverter
+    app.url_map.converters["contact_point"] = ContactPointConverter
+    app.url_map.converters["report"] = ReportConverter

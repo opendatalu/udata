@@ -1,0 +1,21 @@
+{% extends 'mail/base.html' %}
+
+{% block body %}
+<p style="margin: 0;padding: 0;">{{ first_sentence }}</p>
+
+<p style="margin: 0;padding: 0;"><b>File name: </b>{{filename}}</p>
+
+<p style="margin: 0;padding: 0;"><b>File path/id:</b> {{filepath}}</p>
+
+<p style="margin: 0;padding: 0;"><b>Dataset id:</b> {{dataset_id}}</p>
+
+<p style="margin: 0;padding: 0;"><b>Dataset URL:</b> {{dataset_url}}</p>
+
+<p style="margin: 0;padding: 0;"><b>Resource id:</b> {{resource_id}}</p>
+
+<p style="margin: 0;padding: 0;"><b>Resource URL:</b> {{resource_url}}</p>
+
+<p style="margin: 0;padding: 0;"><b></b></p>
+
+<p style="margin: 0;padding: 0;">{{report}}</p>
+{% endblock %}

@@ -1,12 +1,13 @@
 from udata.auth import Permission, UserNeed
-
 from udata.core.organization.permissions import (
-    OrganizationAdminNeed, OrganizationEditorNeed
+    OrganizationAdminNeed,
+    OrganizationEditorNeed,
 )
+from udata.core.reuse.models import Reuse
 
 
 class ReuseEditPermission(Permission):
-    def __init__(self, reuse):
+    def __init__(self, reuse: Reuse) -> None:
         needs = []
 
         if reuse.organization:

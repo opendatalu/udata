@@ -20,6 +20,7 @@ export default {
             default: () => new Dataset(),
         },
     },
+    
     data() {
         return {
             fields: [{
@@ -37,9 +38,9 @@ export default {
                     widget: config.license_groups ? 'select-input-group' : 'select-input',
                     values: licenses,
                     groups: config.license_groups,
-                    map(item) {
-                        return {value: item.id, text: item.title};
-                    }
+                    map: ((item) => {
+                        return {value: item.id, text: this._(item.title)};
+                    }).bind(this)
                 }, {
                     id: 'frequency',
                     label: this._('Update frequency'),

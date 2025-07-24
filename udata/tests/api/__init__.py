@@ -1,18 +1,17 @@
-import pytest
-
 from contextlib import contextmanager
+
+import pytest
 
 from ..frontend import FrontTestCase
 
 
-@pytest.mark.usefixtures('instance_path')
+@pytest.mark.usefixtures("instance_path")
 class APITestCase(FrontTestCase):
-
     @pytest.fixture(autouse=True)
     def inject_api(self, api):
-        '''
+        """
         Inject API test client for compatibility with legacy tests.
-        '''
+        """
         self.api = api
 
     @contextmanager
@@ -29,5 +28,11 @@ class APITestCase(FrontTestCase):
     def put(self, url, data=None, json=True, *args, **kwargs):
         return self.api.put(url, data=data, json=json, *args, **kwargs)
 
+    def patch(self, url, data=None, json=True, *args, **kwargs):
+        return self.api.patch(url, data=data, json=json, *args, **kwargs)
+
     def delete(self, url, data=None, *args, **kwargs):
         return self.api.delete(url, data=data, *args, **kwargs)
+
+    def options(self, url, data=None, *args, **kwargs):
+        return self.api.options(url, data=data, *args, **kwargs)

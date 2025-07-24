@@ -1,0 +1,7 @@
+udata job run check-resources 50 --delay
+
+
+
+
+
+tail /var/log/udata-celery-worker.log -f -n 1000

@@ -131,8 +131,13 @@ export default {
                 },
                 chunking: {
                     enabled: this.$options.chunk,
+                    partSize: 5 * 1024 * 1024, // aws s3 constraints
                     concurrent: {
-                        enabled: this.$options.chunk,
+                        enabled: false,
+                        // we disable for now concurrency as we can't guarantee that even the first chunk is the first one
+                        // which we need for S3 to create the upload ID
+                        // enabled: this.$options.chunk,
+                        // maxConnections: 1,
                     },
                     paramNames: {
                         chunkSize: 'chunksize',
@@ -153,6 +158,16 @@ export default {
                     onProgress: this.on_progress,
                     onComplete: this.on_complete,
                     onError: this.on_upload_error,
+                    // This would have been a hack to force first chunk first, so we can create an upload ID for S3,
+                    // and then resume the concurrency. But first chunk is not always the first one...
+                    // We disabled concurrency for now.            
+                    // onUploadChunkSuccess(id, chunkData, responseJSON, xhr) {
+                    //     if (chunkData.partIndex === 0) {
+                    //         this._options.chunking.concurrent.maxConnections = 3;
+                    //         // this is useful because first call has to create the upload id when using s3
+                    //         console.log("First chunk uploaded. Upgrading max parallel connections")
+                    //     }
+                    // },
                 },
                 validation: {allowedExtensions: this.$options.allowedExtensions || allowedExtensions.items},
                 messages,

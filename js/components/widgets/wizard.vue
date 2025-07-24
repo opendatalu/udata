@@ -43,7 +43,14 @@
                 </ul>
             </div>
         </div>
-        <div class="row">
+
+        <div class="row" v-if="use_mcaptcha && step_index == 0" style="margin-bottom:20px">
+            <div class="col-xs-12">
+                <div id="mcaptcha__widget-container" style="height: 80px;"></div>
+            </div>
+        </div>
+
+        <div class="row" v-if="mcaptcha_checked || !use_mcaptcha || step_index > 0">
             <div class="col-xs-12">
                 <box boxclass="box-solid" :footer="true">
                     <component :is="component" v-ref:content></component>
@@ -75,11 +82,21 @@ import Vue from 'vue';
 import Layout from 'components/layout.vue';
 import Box from 'components/containers/box.vue';
 
+import config from 'config';
+
+
+import API from 'api';
+
 export default {
     name: 'wizard',
     data() {
         return {
-            step_index: 0
+            step_index: 0,
+            // We decided to disable the mcaptcha in the admin.
+            // To restore just uncomment the comment in the following line.
+            use_mcaptcha: false, // !!config.mcaptcha_config,
+            mcaptcha_checked: config.mcaptcha_config ? false : true,
+            failed_mcaptcha: false,
         };
     },
     props: ['title', 'steps', 'finish'],
@@ -156,9 +173,52 @@ export default {
             if (this.active_step.init) {
                 this.active_step.init(this.$refs.content);
             }
+        },
+        async update_mcaptcha_checked() {
+
+            if(this.failed_mcaptcha) {
+                return;
+            }
+
+            if(this.mcaptcha_checked) {
+                clearInterval(this.intervalUpdateMcaptchaToken);
+                return true;
+            }
+
+            if(!window.mcaptchaToken) {
+                return;
+            }
+
+            const payload = {mcaptcha_token: window.mcaptchaToken}
+            API.spam.check_mcaptcha({payload}, result => {
+
+                if(result.status == 200) {
+                this.mcaptcha_checked = true;
+            } else {
+                this.failed_mcaptcha = true;
+                console.log("mcaptcha check failed", result);
+            }
+
+            });
+
+
+            clearInterval(this.intervalUpdateMcaptchaToken);
+        }
+    },
+    beforeDestroy() {
+        if(this.intervalUpdateMcaptchaToken) {
+            clearInterval(this.intervalUpdateMcaptchaToken);
         }
     },
     created() {
+        
+        window.mcaptchaToken = null;
+
+        // Add mcaptcha token interval
+        if (this.use_mcaptcha) {
+            this.intervalUpdateMcaptchaToken = setInterval(this.update_mcaptcha_checked.bind(this), 300);
+        }
+
         // Load steps components
         this.steps.forEach((step, index) => {
             let component = step.component instanceof Vue ?
@@ -166,7 +226,8 @@ export default {
                 Vue.extend(step.component);
             this.$options.components[`step-${index}`] = component;
         });
-    }, events: {
+    }, 
+    events: {
         'wizard:enable-next': function() {
             this.active_step.disableNext = false;
         }

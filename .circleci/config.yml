@@ -4,8 +4,8 @@ version: 2
 jobs:
   python:
     docker:
-      - image: udata/circleci:2-alpine
-      - image: mongo:3.6
+      - image: udata/circleci:py3.11
+      - image: mongo:6.0.4
       - image: redis:alpine
     environment:
        BASH_ENV: /root/.bashrc
@@ -19,24 +19,33 @@ jobs:
           command: export BASE_BRANCH=$(base_branch)
       - restore_cache:
           keys:
-          - py3-cache-v9-{{ arch }}-{{ checksum "python.deps" }}
-          - py3-cache-v9-{{ arch }}-{{ .Branch }}
-          - py3-cache-v9-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+          - py3-cache-v12-{{ arch }}-{{ checksum "python.deps" }}
+          - py3-cache-v12-{{ arch }}-{{ .Branch }}
+          - py3-cache-v12-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
-          name: Install python dependencies
+          name: Install Python dependencies
           command: |
-            virtualenv venv
+            python -m venv venv
             source venv/bin/activate
+            pip install --upgrade wheel pip
             pip install -r requirements/develop.pip
             pip install -e .
       - save_cache:
-          key: py3-cache-v9-{{ arch }}-{{ checksum "python.deps" }}
+          key: py3-cache-v12-{{ arch }}-{{ checksum "python.deps" }}
           paths:
           - venv
       - save_cache:
-          key: py3-cache-v9-{{ arch }}-{{ .Branch }}
+          key: py3-cache-v12-{{ arch }}-{{ .Branch }}
           paths:
           - venv
+      - run:
+          name: Lint and format code and sort imports
+          # ruff check --select I . : check linting and imports sorting without fixing (to fix, use --fix)
+          # ruff format --check . : check code formatting without fixing (to fix, remove --check)
+          command: |
+            source venv/bin/activate
+            ruff check .
+            ruff format --check .
       - run:
           name: Run tests
           command: |
@@ -57,7 +66,7 @@ jobs:
   assets:
     docker:
       # TODO make an image based on 2-alpine w/ nvm and phantom deps
-      - image: udata/circleci:py3
+      - image: udata/circleci:py3.11
     environment:
        BASH_ENV: /root/.bashrc
     steps:
@@ -101,7 +110,7 @@ jobs:
 
   dist:
     docker:
-      - image: udata/circleci:2-alpine
+      - image: udata/circleci:py3.11
     environment:
        BASH_ENV: /root/.bashrc
     steps:
@@ -132,7 +141,7 @@ jobs:
 
   publish:
     docker:
-      - image: udata/circleci:2-alpine
+      - image: udata/circleci:py3.11
     steps:
       - attach_workspace:
           at: .

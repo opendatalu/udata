@@ -118,10 +118,10 @@ master= true
 
 ; Python / Environment configuration
 plugin = python3
-home = /srv/udata_workspace
+home = /srv/udata
 chdir = %(home)
-virtualenv = %(home)/venv
-pythonpath = %(home)/venv/bin
+virtualenv = %(home)
+pythonpath = %(home)/bin
 module = udata.wsgi
 callable = app
 
@@ -240,7 +240,7 @@ server {
 
     client_max_body_size 0; # Disable max client body size
 
-    root /srv/udata_workspace/public/;
+    root /srv/udata/public/;
 
     # Enable gzip compression
     gzip on;
@@ -382,7 +382,7 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_TASK_RESULT_EXPIRES = 86400
 
 # We use Redis as caching backend but in a separate collection
-CACHE_TYPE = 'redis'
+CACHE_TYPE = 'flask_caching.backends.redis'
 CACHE_REDIS_URL = 'redis://localhost:6379/2'
 
 # The identity used to send mails

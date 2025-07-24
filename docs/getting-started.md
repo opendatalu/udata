@@ -5,16 +5,16 @@ This guide is about starting a udata and udata-front environment for local devel
 We’ll use the following repositories:
 
 - [https://github.com/opendatateam/udata](https://github.com/opendatateam/udata)
-- [https://github.com/etalab/udata-front](https://github.com/etalab/udata-front)
+- [https://github.com/datagouv/udata-front](https://github.com/datagouv/udata-front)
 
 # Check the system requirements
 
 !!! info
-    Be aware that udata now requires Python **>3.7,<3.10** to work. 
+    Be aware that udata now requires Python **>3.9,<=3.11** to work.
 
 udata requires several libraries to be installed to work. You can see them on the udata documentation link below.
 
-We’ll use [docker-compose](https://docs.docker.com/compose/) to manage external services so you don’t have to install native mongodb and redis.
+We’ll use [docker compose](https://docs.docker.com/compose/) to manage external services so you don’t have to install native mongodb and redis.
 
 # Setup udata
 
@@ -50,11 +50,11 @@ In this new directory, clone udata :
 git clone git@github.com:opendatateam/udata.git
 ```
 
-You can start your local development environment with docker-compose.
+You can start your local development environment with docker compose.
 
 ```bash
 cd udata
-docker-compose up
+docker compose up
 ```
 
 !!! warning
@@ -103,6 +103,14 @@ inv assets-build
 inv widgets-build
 ```
 
+### Alternative to nvm
+
+If you don't want to use nvm and are not actively contributing to the frontend part of udata, you shoud be able to install the dependencies with this command on a modern node version (tested on v20):
+
+```bash
+npm install --legacy-peer-deps
+```
+
 ## Configure udata
 
 udata uses a config file called `udata.cfg` and a custom directory as base for its filesystem, we’ll call it `fs`. You can put them as shown below.
@@ -124,7 +132,7 @@ from udata.settings import Defaults
 DEBUG = True
 SEND_MAIL = False
 SERVER_NAME ='dev.local:7000'
-CACHE_TYPE = 'null'
+CACHE_TYPE = 'flask_caching.backends.null'
 
 URLS_ALLOW_PRIVATE = True
 URLS_ALLOW_LOCAL = True
@@ -133,6 +141,8 @@ URLS_ALLOWED_TLDS = Defaults.URLS_ALLOWED_TLDS | set(['local'])
 RESOURCES_FILE_ALLOWED_DOMAINS = ['*']
 PLUGINS = []
 FS_ROOT = 'fs'
+
+SESSION_COOKIE_SECURE = False
 ```
 
 This define `dev.local:7000` as the URL for your local setup. You’ll have to edit your `/etc/hosts` to add this rule.
@@ -140,6 +150,10 @@ This define `dev.local:7000` as the URL for your local setup. You’ll have to e
 ```bash
 127.0.0.1       dev.local
 ```
+
+!!! WARNING
+    For MacOS users, please note that the [control center is listening on port 7000](https://discussions.apple.com/thread/250472145?sortBy=rank),
+    so the above won't work. Instead, configure for example port `7001` in the `udata.cfg` file.
 
 ## Running the project for the first time
 
@@ -150,11 +164,25 @@ will initalize database, indexes, create fixtures, etc.
 udata init
 ```
 
+!!! note "Fixtures loading"
+    Loading fixtures is done hunder the hood using the `import-fixtures` command,
+    which relies on the [udata-fixtures][] repository, and will import the fixtures
+    declared in the `FIXTURE_DATASET_SLUGS` config.
+
 You can then start udata server with the `serve` subcommand.
 
 ```bash
 inv serve
 ```
+
+!!! WARNING
+    For MacOS users, this won't work as the port `7000` is already used, as explained above. If you've changed the `udata.cfg` to
+    have a `SERVER_NAME=dev.local:7001`, use the following command instead, and make sure to use the port `7001` throughout the rest
+    of the documentation and examples.
+
+    ```bash
+    inv serve --port 7001
+    ```
 
 Now, you can use your udata api !
 
@@ -194,7 +222,7 @@ First, clone udata-front in your workspace.
 
 ```bash
 cd $UDATA_WORKSPACE
-git clone git@github.com:etalab/udata-front.git
+git clone git@github.com:datagouv/udata-front.git
 ```
 
 Modify your `udata.cfg` with the following lines.
@@ -249,7 +277,7 @@ You can now visit `dev.local:7000/` in your browser and start playing with your 
 You can use parcel to watch for file changes in udata or udata-front directory with
 
 ```bash
-inv assets-watch 
+inv assets-watch
 ```
 
 !!! note "Tell us what you think"
@@ -273,3 +301,4 @@ Once the project is up and running, it’s time to customize it! Take a look at 
 [github]: https://github.com/opendatateam/udata
 [new issue]: https://github.com/opendatateam/udata/issues/new
 [udata-search-service]: https://github.com/opendatateam/udata-search-service
+[udata-fixtures]: https://github.com/opendatateam/udata-fixtures

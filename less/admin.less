@@ -21,3 +21,17 @@
 
     margin-bottom: 5px;
 }
+
+
+/** Cacher stats jusqu'à restauration de la fonctionalité avec piwik/matomo ou bien udata-metrics, selon de ou ils viennent [#183] */
+
+div.reuses-widget th.text-center.pointer:nth-of-type(7),
+div.reuses-widget td.text-center:nth-of-type(7),
+div.datasets-widget th.text-center.pointer:nth-of-type(7),
+div.datasets-widget td.text-center:nth-of-type(7),
+div.resources-widget th:nth-of-type(5),
+div.resources-widget td.text-center:nth-of-type(5),
+div.organizations-widget th:nth-of-type(7),
+div.organizations-widget  td.text-center:nth-of-type(7) {
+    display:none;
+}
